@@ -21,7 +21,7 @@ function Home({ onLogout }) {
           </ul>
         </nav>
       </header>
-      {/* Your home page content */}
+
     </div>
   );
 }
