@@ -1,49 +1,27 @@
 import React from 'react';
-import './home.css'; // Import the CSS file
+import { Link, useLocation } from 'react-router-dom'; // Import useLocation hook from react-router-dom
+import './home.css';
 
 function Home({ onLogout }) {
+  const location = useLocation();
+
   return (
-    <div className="home-container">
-      <header className="home-header">
-        <h1>Local Event Discovery</h1>
-        <button onClick={onLogout}>Logout</button>
+    <div className={`home-page ${location.pathname === '/home' ? 'show-background' : ''}`}>
+      <header className='head'>
+        <nav>
+          <h1 className='logo'>
+            <span className='site-name'>Event</span><span className='site-tagline'>Booking</span>
+          </h1>
+          <ul className="nav-links">
+            <li><Link to="/home">Home</Link></li>
+            <li><Link to="/">Pricing</Link></li>
+            <li><Link to="/events">Create Event</Link></li>
+            <li><Link to="/explore">Explore Events</Link></li>
+            <li><Link to="/admin">Admin</Link></li>
+          </ul>
+        </nav>
       </header>
-      <section className="search-bar">
-        <input type="text" placeholder="Search for events..." />
-        <button>Search</button>
-      </section>
-      <section className="featured-events">
-        <h2>Featured Events</h2>
-        <div className="events-list">
-          {/* Sample featured events */}
-          <div className="event-card">
-            <h3>Concert in the Park</h3>
-            <p>Date: July 10, 2024</p>
-            <p>Location: Central Park</p>
-          </div>
-          <div className="event-card">
-            <h3>Art Exhibition</h3>
-            <p>Date: July 15, 2024</p>
-            <p>Location: Downtown Art Gallery</p>
-          </div>
-        </div>
-      </section>
-      <section className="upcoming-events">
-        <h2>Upcoming Events</h2>
-        <div className="events-list">
-          {/* Sample upcoming events */}
-          <div className="event-card">
-            <h3>Farmers Market</h3>
-            <p>Date: July 12, 2024</p>
-            <p>Location: City Square</p>
-          </div>
-          <div className="event-card">
-            <h3>Food Truck Festival</h3>
-            <p>Date: July 18, 2024</p>
-            <p>Location: Riverside Park</p>
-          </div>
-        </div>
-      </section>
+      {/* Your home page content */}
     </div>
   );
 }

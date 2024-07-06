@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import './RegisterForm.css';
 
 function RegisterForm({ returnToLogin }) {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [username, setUsername] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [phoneNumber, setPhoneNumber] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [message, setMessage] = React.useState('');
   const navigate = useNavigate();
 
   const handleRegister = async () => {
@@ -17,20 +19,18 @@ function RegisterForm({ returnToLogin }) {
         return;
       }
 
-      // Add input validation here
-      if (!username || !email || !password) {
-        setMessage('Please fill in all fields');
-        return;
-      }
+      const response = await axios.post('http://localhost:5000/api/register', {
+        username,
+        email,
+        phone_number: phoneNumber,
+        password
+      });
 
-      const response = await axios.post('http://localhost:5000/api/register', { username, email, password });
       setMessage(response.data.message);
-      if (response.status === 200) {
-        // Delay navigation by 2 seconds
+      if (response.status === 201) {
         setTimeout(() => {
-          navigate('/home', { replace: true }); // Navigate to /home
-          returnToLogin(); // Call the parent function to return to login form
-        }, 2000); // 2000 milliseconds = 2 seconds
+          navigate('/', { replace: true });
+        }, 2000);
       }
     } catch (error) {
       if (error.response?.data?.message) {
@@ -42,54 +42,52 @@ function RegisterForm({ returnToLogin }) {
   };
 
   const handleReturnToLogin = () => {
-    returnToLogin(); // Ensure returnToLogin is invoked correctly
+    returnToLogin(navigate); // Pass the navigate function to returnToLogin
   };
 
   return (
     <div className="register-form-container">
       <h2>Register</h2>
-      <InputField
+      <input
         type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+        className="input-field"
       />
-      <InputField
+      <input
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        className="input-field"
       />
-      <InputField
+      <input
+        type="tel"
+        placeholder="Phone Number"
+        value={phoneNumber}
+        onChange={(e) => setPhoneNumber(e.target.value)}
+        className="input-field"
+      />
+      <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        className="input-field"
       />
-      <InputField
+      <input
         type="password"
         placeholder="Confirm Password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
+        className="input-field"
       />
       <button onClick={handleRegister}>Register</button>
       <p>{message}</p>
-      <div className="return-to-login">
-        <button onClick={handleReturnToLogin}>Return to Login</button>
-      </div>
+      <p>Already have an account? <button onClick={handleReturnToLogin}>Return to Login</button></p>
     </div>
   );
 }
-
-const InputField = ({ type, placeholder, value, onChange }) => {
-  return (
-    <input
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-    />
-  );
-};
 
 export default RegisterForm;
