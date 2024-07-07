@@ -1,63 +1,76 @@
 /* RegisterForm.css */
-.register-form-container {
-    width: 500px;
-    margin: 20px auto;
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* Ensure full viewport height */
+    margin: 0;
+    background-color: #9c9b9b;
+    /* Optional: Background color for the entire page */
+}
+
+.RegisterForm {
+    max-width: 300px;
+    /* Reduced max-width for a smaller form */
     padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #555555;
-}
-
-.register-form-container h2 {
+    border-radius: 8px;
+    background-color: #bdbdbd;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+    /* Centering text and elements */
 }
 
-.input-field {
-    width: 80%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 16px;
-    background-color: #aaa7a7;
-    color: #000000;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+.RegisterForm h2 {
+    margin-bottom: 10px;
+    color: #333333;
+    font-size: 1.3rem;
+    width: 200px;
+    /* Adjusted font size for heading */
 }
 
-.input-field:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.RegisterForm form {
+    display: flex;
+    flex-direction: column;
 }
 
-button {
+.RegisterForm label {
+    margin-bottom: 10px;
+    color: #555555;
+    text-align: left;
+
+}
+
+.RegisterForm input[type="text"],
+.RegisterForm input[type="email"],
+.RegisterForm input[type="tel"],
+.RegisterForm input[type="password"] {
     width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: hsl(0, 100%, 96%);
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    margin-bottom: 15px;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-.return-to-login {
-    text-align: center;
-    margin-top: 10px;
-}
-
-p {
-    margin: 0;
-    color: red;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
     font-size: 14px;
+    /* Adjusted font size for inputs */
+}
+
+.RegisterForm button {
+    margin-top: 15px;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    /* Blue background color */
+    color: #ffffff;
+    font-size: 14px;
+    /* Adjusted font size for button */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.RegisterForm button:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
 }

@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Login';
-import Home from './components/Home';
 import RegisterForm from './components/RegisterForm';
+import Home from './components/Home'; // Import Home component
 import './App.css';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -16,8 +16,10 @@ function App() {
     setIsAuthenticated(false);
   };
 
-  const handleReturnToLogin = (navigate) => {
-    navigate('/'); // Navigate to '/' route
+  const handleRegister = () => {
+    // Handle registration success or any other actions as needed
+    // For simplicity, just update authentication state
+    setIsAuthenticated(true);
   };
 
   return (
@@ -25,9 +27,15 @@ function App() {
       <div className="App">
         <header className="App-header">
           <Routes>
-            <Route path="/" element={isAuthenticated ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />} />
-            <Route path="/home" element={isAuthenticated ? <Home onLogout={handleLogout} /> : <Navigate to="/" />} />
-            <Route path="/register" element={<RegisterForm returnToLogin={handleReturnToLogin} />} />
+            <Route path="/" element={<Navigate to={isAuthenticated ? '/home' : '/login'} />} />
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route path="/register" element={<RegisterForm onRegister={handleRegister} />} />
+            {/* Conditionally render Home or Login based on isAuthenticated */}
+            {isAuthenticated ? (
+              <Route path="/home" element={<Home onLogout={handleLogout} />} />
+            ) : (
+              <Route path="/home" element={<Navigate to="/login" />} />
+            )}
           </Routes>
         </header>
       </div>

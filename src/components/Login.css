@@ -1,63 +1,53 @@
 /* Login.css */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
 
-.Welcome {
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.login-container {
-    background: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 400px;
-    box-sizing: border-box;
-}
-
-.login-container h2 {
-    margin: 0 0 20px 0;
-    color: #d65353;
-    font-size: 24px;
-}
-
-.login-container input {
-    width: calc(100% - 20px);
-    padding: 12px;
-    margin: 10px 0;
+.Login {
+    max-width: 350px;
+    margin: 0 auto;
+    padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-
+    border-radius: 8px;
+    background-color: #bdbbbb;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
 
-.login-container button {
-    width: calc(100% - 20px);
+.Login h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333333;
+}
+
+.Login form {
+    display: flex;
+    flex-direction: column;
+}
+
+.Login label {
+    margin-bottom: 10px;
+    color: #555555;
+}
+
+.Login input[type="text"],
+.Login input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.Login button {
+    margin-top: 10px;
     padding: 12px;
-    margin: 10px 0;
-    background-color: #007bff;
     border: none;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #ffffff;
     font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.login-container button:hover {
+.Login button:hover {
     background-color: #0056b3;
-}
-
-.login-container p {
-    margin: 10px 0 0;
-    color: red;
-    font-size: 14px;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Import useLocation hook from react-router-dom
-import './home.css';
+import { NavLink, useLocation } from 'react-router-dom'; // Import NavLink for active link styling and useLocation hook
+import './Home.css';
 
 function Home({ onLogout }) {
   const location = useLocation();
@@ -13,15 +13,15 @@ function Home({ onLogout }) {
             <span className='site-name'>Event</span><span className='site-tagline'>Booking</span>
           </h1>
           <ul className="nav-links">
-            <li><Link to="/home">Home</Link></li>
-            <li><Link to="/">Pricing</Link></li>
-            <li><Link to="/events">Create Event</Link></li>
-            <li><Link to="/explore">Explore Events</Link></li>
-            <li><Link to="/admin">Admin</Link></li>
+            <li><NavLink to="/home" activeClassName="active-link">Home</NavLink></li>
+            <li><NavLink to="/pricing" activeClassName="active-link">Pricing</NavLink></li>
+            <li><NavLink to="/events" activeClassName="active-link">Create Event</NavLink></li>
+            <li><NavLink to="/explore" activeClassName="active-link">Explore Events</NavLink></li>
+            <li><NavLink to="/admin" activeClassName="active-link">Admin</NavLink></li>
           </ul>
         </nav>
+        <p className="event-ticketing">Your gateway to unforgettable moments. Secure your tickets effortlessly, and make every event memorable.</p>
       </header>
-
     </div>
   );
 }

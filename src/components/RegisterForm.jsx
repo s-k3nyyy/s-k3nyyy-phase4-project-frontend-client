@@ -1,93 +1,98 @@
-import React from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import './RegisterForm.css';
+import axios from 'axios'; // Import axios for making HTTP requests
 
-function RegisterForm({ returnToLogin }) {
-  const [username, setUsername] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [phoneNumber, setPhoneNumber] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [confirmPassword, setConfirmPassword] = React.useState('');
-  const [message, setMessage] = React.useState('');
+const RegisterForm = ({ onRegister }) => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const navigate = useNavigate();
 
-  const handleRegister = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    const userData = {
+      username,
+      email,
+      password,
+      phoneNumber,
+    };
+
     try {
-      if (password !== confirmPassword) {
-        setMessage('Passwords do not match');
-        return;
-      }
-
-      const response = await axios.post('http://localhost:5000/api/register', {
-        username,
-        email,
-        phone_number: phoneNumber,
-        password
-      });
-
-      setMessage(response.data.message);
-      if (response.status === 201) {
-        setTimeout(() => {
-          navigate('/', { replace: true });
-        }, 2000);
-      }
+      const response = await axios.post('http://localhost:5000/register', userData);
+      console.log(response.data); // Log the response for debugging
+      onRegister(); // Update parent state or perform necessary actions
+      navigate('/login', { replace: true }); // Redirect to login page after successful registration
     } catch (error) {
-      if (error.response?.data?.message) {
-        setMessage(error.response.data.message);
-      } else {
-        setMessage('An error occurred');
-      }
+      alert('Registration failed. Please try again.'); // Handle error
+      console.error('Registration Error:', error); // Log the error for debugging
     }
   };
 
-  const handleReturnToLogin = () => {
-    returnToLogin(navigate); // Pass the navigate function to returnToLogin
-  };
-
   return (
-    <div className="register-form-container">
-      <h2>Register</h2>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="input-field"
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="input-field"
-      />
-      <input
-        type="tel"
-        placeholder="Phone Number"
-        value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
-        className="input-field"
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="input-field"
-      />
-      <input
-        type="password"
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-        className="input-field"
-      />
-      <button onClick={handleRegister}>Register</button>
-      <p>{message}</p>
-      <p>Already have an account? <button onClick={handleReturnToLogin}>Return to Login</button></p>
+    <div className="RegisterForm">
+      <h2 className="title">Register</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Username:
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Email:
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Phone Number:
+          <input
+            type="tel"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Confirm Password:
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </label>
+        <div className="login-link">
+          Already have an account? <Link to="/login">Login here</Link>
+        </div>
+        <button type="submit">Register</button>
+      </form>
     </div>
   );
-}
+};
 
 export default RegisterForm;
