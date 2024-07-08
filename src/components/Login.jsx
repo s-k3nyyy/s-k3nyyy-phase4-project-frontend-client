@@ -6,6 +6,8 @@ import './Login.css';
 const Login = ({ onLogin }) => {
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [message, setMessage] = useState(null);
   const navigate = useNavigate();
 
@@ -50,11 +52,14 @@ const Login = ({ onLogin }) => {
         <label>
           Password:
           <input
-            type="password"
+            type={passwordVisible ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <span onClick={() => setPasswordVisible(!passwordVisible)}>
+            {passwordVisible ? '👁️' : '🙈'}
+          </span>
         </label>
         <div className="login-link">
           Don't have an account? <Link to="/register">Register here</Link>

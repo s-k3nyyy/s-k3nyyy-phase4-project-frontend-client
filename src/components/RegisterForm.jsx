@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './RegisterForm.css';
-import axios from 'axios'; // Import axios for making HTTP requests
+import axios from 'axios'; 
 
 const RegisterForm = ({ onRegister }) => {
   const [username, setUsername] = useState('');
@@ -9,6 +9,8 @@ const RegisterForm = ({ onRegister }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -28,12 +30,12 @@ const RegisterForm = ({ onRegister }) => {
 
     try {
       const response = await axios.post('http://localhost:5000/register', userData);
-      console.log(response.data); // Log the response for debugging
-      onRegister(); // Update parent state or perform necessary actions
-      navigate('/login', { replace: true }); // Redirect to login page after successful registration
+      console.log(response.data);
+      onRegister(); 
+      navigate('/login', { replace: true }); 
     } catch (error) {
-      alert('Registration failed. Please try again.'); // Handle error
-      console.error('Registration Error:', error); // Log the error for debugging
+      alert('Registration failed. Please try again.'); 
+      console.error('Registration Error:', error); 
     }
   };
 
@@ -71,20 +73,26 @@ const RegisterForm = ({ onRegister }) => {
         <label>
           Password:
           <input
-            type="password"
+            type={passwordVisible ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <span onClick={() => setPasswordVisible(!passwordVisible)}>
+            {passwordVisible ? '👁️' : '🙈'}
+          </span>
         </label>
         <label>
           Confirm Password:
           <input
-            type="password"
+            type={confirmPasswordVisible ? 'text' : 'password'}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
+          <span onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
+            {confirmPasswordVisible ? '👁️' : '🙈'}
+          </span>
         </label>
         <div className="login-link">
           Already have an account? <Link to="/login">Login here</Link>

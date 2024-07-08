@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom'; // Import NavLink for active link styling and useLocation hook
+import { NavLink, useLocation } from 'react-router-dom';
 import './Home.css';
 
 function Home({ onLogout }) {

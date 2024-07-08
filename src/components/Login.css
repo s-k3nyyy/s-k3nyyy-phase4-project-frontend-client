@@ -51,3 +51,17 @@
 .Login button:hover {
     background-color: #0056b3;
 }
+
+.Login label,
+.RegisterForm label {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.Login input[type="password"]+span,
+.RegisterForm input[type="password"]+span {
+    position: absolute;
+    right: 6px;
+    cursor: pointer;
+}
