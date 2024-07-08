@@ -1,35 +1,36 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios'; // Import axios for making HTTP requests
+import axios from 'axios';
 import './Login.css';
 
 const Login = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState(null); // State to hold success or error message
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [message, setMessage] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const userData = {
-      username,
+      username_or_email: usernameOrEmail,
       password,
     };
 
     try {
       const response = await axios.post('http://localhost:5000/login', userData);
-      console.log(response.data); // Log the response for debugging
+      console.log(response.data);
       setMessage('Login successful');
-      onLogin(); // Update parent state to set isAuthenticated
-      navigate('/home', { replace: true }); // Redirect to home page after successful login
+      onLogin();
+      navigate('/home', { replace: true });
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        setMessage('Invalid username or password'); // Set error message
+        setMessage('Invalid username or password');
       } else {
-        setMessage('Login failed. Please try again later.'); // Generic error message
+        setMessage('Login failed. Please try again later.');
       }
-      console.error('Login Error:', error); // Log the error for debugging
+      console.error('Login Error:', error);
     }
   };
 
@@ -39,22 +40,25 @@ const Login = ({ onLogin }) => {
       {message && <p style={{ color: message.includes('successful') ? 'blue' : 'red' }}>{message}</p>}
       <form onSubmit={handleSubmit}>
         <label>
-          Username:
+          Username or Email:
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={usernameOrEmail}
+            onChange={(e) => setUsernameOrEmail(e.target.value)}
             required
           />
         </label>
         <label>
           Password:
           <input
-            type="password"
+            type={passwordVisible ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <span onClick={() => setPasswordVisible(!passwordVisible)}>
+            {passwordVisible ? '👁️' : '🙈'}
+          </span>
         </label>
         <div className="login-link">
           Don't have an account? <Link to="/register">Register here</Link>
