@@ -61,8 +61,13 @@ const Login = ({ onLogin }) => {
             {passwordVisible ? '👁️' : '🙈'}
           </span>
         </label>
-        <div className="login-link">
-          Don't have an account? <Link to="/register">Register here</Link>
+        <div className="login-links">
+          <div>
+            Don't have an account? <Link to="/register">Register here</Link>
+          </div>
+          <div>
+            Are you an admin? <Link to="/admin/login">Login here</Link>
+          </div>
         </div>
         <button type="submit">Login</button>
       </form>

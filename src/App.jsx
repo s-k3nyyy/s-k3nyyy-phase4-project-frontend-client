@@ -3,23 +3,37 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Login from './components/Login';
 import RegisterForm from './components/RegisterForm';
 import Home from './components/Home'; // Import Home component
+import AdminDashboard from './components/AdminDashboard'; // Import AdminDashboard component
+import AdminLogin from './components/AdminLogin'; // Import AdminLogin component
 import './App.css';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
+  const handleAdminLogin = () => {
+    setIsAdminAuthenticated(true);
+  };
+
+  const handleUserLogin = () => {
+    setIsUserAuthenticated(true);
   };
 
   const handleLogout = () => {
-    setIsAuthenticated(false);
+    setIsAdminAuthenticated(false);
+    setIsUserAuthenticated(false);
+    localStorage.removeItem('admin_token'); // Clear admin JWT token from localStorage
+    // Optionally clear user JWT token as well if needed
+  };
+
+  const handleAdminLogout = () => {
+    setIsAdminAuthenticated(false);
+    localStorage.removeItem('admin_token'); // Clear admin JWT token from localStorage
   };
 
   const handleRegister = () => {
     // Handle registration success or any other actions as needed
-    // For simplicity, just update authentication state
-    setIsAuthenticated(true);
+    setIsUserAuthenticated(true);
   };
 
   return (
@@ -27,15 +41,25 @@ function App() {
       <div className="App">
         <header className="App-header">
           <Routes>
-            <Route path="/" element={<Navigate to={isAuthenticated ? '/home' : '/login'} />} />
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route path="/" element={<Navigate to={isUserAuthenticated ? '/home' : '/login'} />} />
+            <Route path="/login" element={<Login onLogin={handleUserLogin} />} />
             <Route path="/register" element={<RegisterForm onRegister={handleRegister} />} />
-            {/* Conditionally render Home or Login based on isAuthenticated */}
-            {isAuthenticated ? (
-              <Route path="/home" element={<Home onLogout={handleLogout} />} />
+            {/* Conditionally render Home or redirect to /login */}
+            {isUserAuthenticated ? (
+              <>
+                <Route path="/home" element={<Home onLogout={handleLogout} />} />
+                <Route path="/admin" element={<Navigate to="/admin/login" />} />
+              </>
             ) : (
-              <Route path="/home" element={<Navigate to="/login" />} />
+              <>
+                <Route path="/home" element={<Navigate to="/login" />} />
+                <Route path="/admin" element={<AdminLogin onLogin={handleAdminLogin} />} />
+              </>
             )}
+            {/* Route for Admin Dashboard */}
+            <Route path="/admin/dashboard" element={<AdminDashboard onLogout={handleAdminLogout} />} />
+            {/* Route for Admin Login */}
+            <Route path="/admin/login" element={<AdminLogin onLogin={handleAdminLogin} />} />
           </Routes>
         </header>
       </div>
