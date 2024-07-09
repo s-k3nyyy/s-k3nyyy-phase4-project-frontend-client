@@ -4,6 +4,7 @@ import './Home.css';
 
 function Home({ onLogout }) {
   const location = useLocation();
+  const isAdmin = localStorage.getItem('admin_token'); // Check if the admin token exists
 
   return (
     <div className={`home-page ${location.pathname === '/home' ? 'show-background' : ''}`}>
@@ -17,7 +18,7 @@ function Home({ onLogout }) {
             <li><NavLink to="/pricing" activeClassName="active-link">Pricing</NavLink></li>
             <li><NavLink to="/events" activeClassName="active-link">Create Event</NavLink></li>
             <li><NavLink to="/explore" activeClassName="active-link">Explore Events</NavLink></li>
-            <li><NavLink to="/admin" activeClassName="active-link">Admin</NavLink></li>
+            {isAdmin && <li><NavLink to="/admin" activeClassName="active-link">Admin</NavLink></li>}
           </ul>
         </nav>
         <p className="event-ticketing">Your gateway to unforgettable moments. Secure your tickets effortlessly, and make every event memorable.</p>

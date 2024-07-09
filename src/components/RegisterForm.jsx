@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './RegisterForm.css';
-import axios from 'axios'; 
+import axios from 'axios';
 
 const RegisterForm = ({ onRegister }) => {
   const [username, setUsername] = useState('');
@@ -25,17 +25,17 @@ const RegisterForm = ({ onRegister }) => {
       username,
       email,
       password,
-      phoneNumber,
+      phone_number: phoneNumber, // match the backend attribute name
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/register', userData);
+      const response = await axios.post('http://localhost:5000/register/user', userData); // adjust the endpoint
       console.log(response.data);
-      onRegister(); 
-      navigate('/login', { replace: true }); 
+      onRegister(); // optional: trigger a callback function after successful registration
+      navigate('/login', { replace: true }); // navigate to login page after registration
     } catch (error) {
-      alert('Registration failed. Please try again.'); 
-      console.error('Registration Error:', error); 
+      alert('Registration failed. Please try again.');
+      console.error('Registration Error:', error);
     }
   };
 
