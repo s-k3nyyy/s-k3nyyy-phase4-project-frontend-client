@@ -1,0 +1,132 @@
+.search-and-filter-container {
+    position: sticky;
+    top: 0;
+    background-color: #ffffff77;
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+    z-index: 1;
+}
+
+.events-container {
+    max-width: 1400px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.events-title {
+    text-align: center;
+    font-size: 2.5em;
+    margin-top: 80px;
+    color: #e7a427;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2em;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.price-range-inputs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.price-input {
+    width: 45%;
+    padding: 10px;
+    font-size: 1.2em;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.event-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+}
+
+.event-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.event-photo {
+    width: 100px;
+    height: 450px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+
+.event-title {
+    font-size: 1.2em;
+    margin-bottom: 210px;
+    color: #000000;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.event-description {
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    color: #000000;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.event-price {
+    font-size: 1em;
+    color: #000000;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 5px;
+}
+
+.event-date {
+    font-size: 0.9em;
+    color: #000000;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.like-button {
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.like-button:hover {
+    background-color: #3e8e41;
+}
+
+.like-button.liked {
+    background-color: #999;
+    color: #ffffff;
+}
+
+.no-events-message {
+    text-align: center;
+    font-size: 1.2em;
+    color: #000000;
+    margin-bottom: 20px;
+}

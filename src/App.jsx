@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import RegisterForm from './components/RegisterForm';
-import Home from './components/Home'; // Import Home component
-import AdminDashboard from './components/AdminDashboard'; // Import AdminDashboard component
-import AdminLogin from './components/AdminLogin'; // Import AdminLogin component
+import Home from './components/Home';
+import AdminDashboard from './components/AdminDashboard';
+import AdminLogin from './components/AdminLogin';
+import ExploreEvents from './components/ExploreEvents';
+import Bookmark from './components/Bookmark'; // Import Bookmark component
 import './App.css';
 
 function App() {
@@ -44,20 +46,29 @@ function App() {
             <Route path="/" element={<Navigate to={isUserAuthenticated ? '/home' : '/login'} />} />
             <Route path="/login" element={<Login onLogin={handleUserLogin} />} />
             <Route path="/register" element={<RegisterForm onRegister={handleRegister} />} />
+
             {/* Conditionally render Home or redirect to /login */}
             {isUserAuthenticated ? (
               <>
                 <Route path="/home" element={<Home onLogout={handleLogout} />} />
-                <Route path="/admin" element={<Navigate to="/admin/login" />} />
+                <Route path="/explore" element={<ExploreEvents />} />
+                <Route path="/bookmark" element={<Bookmark />} /> {/* Add Bookmark route */}
               </>
             ) : (
               <>
                 <Route path="/home" element={<Navigate to="/login" />} />
-                <Route path="/admin" element={<AdminLogin onLogin={handleAdminLogin} />} />
+                <Route path="/explore" element={<Navigate to="/login" />} />
+                <Route path="/bookmark" element={<Navigate to="/login" />} /> {/* Redirect to login if not authenticated */}
               </>
             )}
+
             {/* Route for Admin Dashboard */}
-            <Route path="/admin/dashboard" element={<AdminDashboard onLogout={handleAdminLogout} />} />
+            {isAdminAuthenticated ? (
+              <Route path="/admin/dashboard" element={<AdminDashboard onLogout={handleAdminLogout} />} />
+            ) : (
+              <Route path="/admin/dashboard" element={<Navigate to="/admin/login" />} />
+            )}
+
             {/* Route for Admin Login */}
             <Route path="/admin/login" element={<AdminLogin onLogin={handleAdminLogin} />} />
           </Routes>

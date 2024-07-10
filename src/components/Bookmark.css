@@ -1,0 +1,74 @@
+.bookmarked-events-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.bookmarked-events-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.event-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 420px;
+}
+
+.event-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.event-photo {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    object-fit: cover;
+    max-height: 100px;
+}
+
+.event-title {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.event-description {
+    font-size: 0.9em;
+    margin-bottom: 8px;
+    color: #555;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.event-price {
+    font-size: 1em;
+    color: #777;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 5px;
+}
+
+.event-date {
+    font-size: 0.9em;
+    color: #999;
+    font-family: 'Open Sans', sans-serif;
+}
