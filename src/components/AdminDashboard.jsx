@@ -12,16 +12,18 @@ const axiosInstance = axios.create({
 });
 
 function AdminDashboard() {
+    const [events, setEvents] = useState([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [ticketPrice, setTicketPrice] = useState('');
     const [photoUrl, setPhotoUrl] = useState('');
     const [eventDate, setEventDate] = useState('');
-    const [events, setEvents] = useState([]);
     const [message, setMessage] = useState('');
-    const [isEventListVisible, setIsEventListVisible] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     const [editEventId, setEditEventId] = useState(null);
+    const [viewEvent, setViewEvent] = useState(null); // State for viewing more details
+    const [isLoading, setIsLoading] = useState(false);
+    const [isEventListVisible, setIsEventListVisible] = useState(true); // State for event list visibility
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,78 +32,63 @@ function AdminDashboard() {
 
     const fetchEvents = async () => {
         try {
+            setIsLoading(true);
             const response = await axiosInstance.get('/events');
             setEvents(response.data);
         } catch (error) {
             console.error('Error fetching events:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('admin_token');
-        navigate('/admin/login');
-    };
-
-    const handleCreateEvent = async (e) => {
+    const handleCreateOrUpdateEvent = async (e) => {
         e.preventDefault();
+        const eventData = {
+            title,
+            description,
+            ticket_price: parseFloat(ticketPrice),
+            photo_url: photoUrl,
+            event_date: new Date(eventDate).toISOString(),
+        };
+
         try {
-            const response = await axiosInstance.post('/events', {
-                title,
-                description,
-                ticket_price: parseFloat(ticketPrice),
-                photo_url: photoUrl,
-                event_date: new Date(eventDate),
-            });
-            if (response.status === 201) {
-                setMessage('Event created successfully!');
-                setTitle('');
-                setDescription('');
-                setTicketPrice('');
-                setPhotoUrl('');
-                setEventDate('');
+            setIsLoading(true);
+            let response;
+            if (isEditMode) {
+                response = await axiosInstance.put(`/events/${editEventId}`, eventData);
+            } else {
+                response = await axiosInstance.post('/events', eventData);
+            }
+
+            if (response.status === 200 || response.status === 201) {
+                setMessage(isEditMode ? 'Event updated successfully!' : 'Event created successfully!');
+                clearForm();
                 fetchEvents();
             } else {
-                setMessage('Failed to create event');
+                setMessage('Failed to create or update event');
             }
         } catch (error) {
-            console.error('Error creating event:', error);
-            setMessage('Error creating event. Please try again.');
+            console.error('Error creating or updating event:', error);
+            setMessage('Error creating or updating event. Please try again.');
+        } finally {
+            setIsLoading(false);
         }
     };
 
-    const handleEditEvent = async (e) => {
-        e.preventDefault();
-        console.log("Editing event ID:", editEventId);
-        try {
-            const response = await axiosInstance.put(`/events/${editEventId}`, {
-                title,
-                description,
-                ticket_price: parseFloat(ticketPrice),
-                photo_url: photoUrl,
-                event_date: new Date(eventDate),
-            });
-            console.log("Update response:", response);
-            if (response.status === 200) {
-                setMessage('Event updated successfully!');
-                setTitle('');
-                setDescription('');
-                setTicketPrice('');
-                setPhotoUrl('');
-                setEventDate('');
-                setIsEditMode(false);
-                setEditEventId(null);
-                fetchEvents();
-            } else {
-                setMessage('Failed to update event');
-            }
-        } catch (error) {
-            console.error('Error updating event:', error.response || error.message);
-            setMessage('Error updating event. Please try again.');
-        }
+    const clearForm = () => {
+        setTitle('');
+        setDescription('');
+        setTicketPrice('');
+        setPhotoUrl('');
+        setEventDate('');
+        setIsEditMode(false);
+        setEditEventId(null);
     };
 
     const handleDeleteEvent = async (eventId) => {
         try {
+            setIsLoading(true);
             const response = await axiosInstance.delete(`/events/${eventId}`);
             if (response.status === 200) {
                 setMessage('Event deleted successfully!');
@@ -112,10 +99,12 @@ function AdminDashboard() {
         } catch (error) {
             console.error('Error deleting event:', error);
             setMessage('Error deleting event. Please try again.');
+        } finally {
+            setIsLoading(false);
         }
     };
 
-    const handleEditButtonClick = (event) => {
+    const handleEditEvent = (event) => {
         setTitle(event.title);
         setDescription(event.description);
         setTicketPrice(event.ticket_price.toString());
@@ -125,8 +114,30 @@ function AdminDashboard() {
         setEditEventId(event.id);
     };
 
+    const handleViewMoreClick = async (eventId) => {
+        try {
+            setIsLoading(true);
+            const response = await axiosInstance.get(`/events/${eventId}`);
+            if (response.status === 200) {
+                setViewEvent(response.data);
+            } else {
+                setMessage('Failed to fetch event details');
+            }
+        } catch (error) {
+            console.error('Error fetching event details:', error);
+            setMessage('Error fetching event details. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const toggleEventListVisibility = () => {
         setIsEventListVisible(!isEventListVisible);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('admin_token');
+        navigate('/admin/login'); e
     };
 
     return (
@@ -138,69 +149,87 @@ function AdminDashboard() {
             </div>
 
             <div className="admin-dashboard-content">
-                <div className="create-event-section">
-                    <h3>{isEditMode ? 'Edit Event' : 'Create Event'}</h3>
-                    <form className="admin-dashboard-form" onSubmit={isEditMode ? handleEditEvent : handleCreateEvent}>
-                        <input
-                            type="text"
-                            placeholder="Event Title"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            required
-                        />
-                        <textarea
-                            placeholder="Event Description"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            required
-                        />
-                        <input
-                            type="number"
-                            placeholder="Ticket Price"
-                            value={ticketPrice}
-                            onChange={(e) => setTicketPrice(e.target.value)}
-                            required
-                        />
-                        <input
-                            type="text"
-                            placeholder="Photo URL"
-                            value={photoUrl}
-                            onChange={(e) => setPhotoUrl(e.target.value)}
-                        />
-                        <input
-                            type="datetime-local"
-                            placeholder="Event Date"
-                            value={eventDate}
-                            onChange={(e) => setEventDate(e.target.value)}
-                            required
-                        />
-                        <button type="submit">{isEditMode ? 'Update Event' : 'Create Event'}</button>
-                    </form>
-                    {message && <p>{message}</p>}
-                </div>
-
-                <div className="events-list-section">
-                    <h3>Events List</h3>
-                    <button className="dropdown-button" onClick={toggleEventListVisibility}>
-                        {isEventListVisible ? 'Hide Events' : 'Show Events'}
-                        <span className={`dropdown-arrow ${isEventListVisible ? 'up' : 'down'}`}></span>
-                    </button>
-                    {isEventListVisible && (
-                        <div className="events-list">
-                            {events.map((event) => (
-                                <div key={event.id} className="event-card">
-                                    <h4>{event.title}</h4>
-                                    <p>{event.description}</p>
-                                    <p>Ticket Price: ksh: {event.ticket_price}</p>
-                                    <p>Event Date: {new Date(event.event_date).toLocaleString()}</p>
-                                    {event.photo_url && <img src={event.photo_url} alt={event.title} className="event-photo" />}
-                                    <button onClick={() => handleEditButtonClick(event)}>Edit Event</button>
-                                    <button onClick={() => handleDeleteEvent(event.id)}>Delete Event</button>
-                                </div>
-                            ))}
+                {viewEvent ? (
+                    <div className="event-details">
+                        <h3>{viewEvent.title}</h3>
+                        <p>{viewEvent.description}</p>
+                        <p>Ticket Price: ksh: {viewEvent.ticket_price}</p>
+                        <p>Event Date: {new Date(viewEvent.event_date).toLocaleString()}</p>
+                        {viewEvent.photo_url && <img src={viewEvent.photo_url} alt={viewEvent.title} className="event-photo" />}
+                        <button onClick={() => setViewEvent(null)}>Back to Events List</button>
+                    </div>
+                ) : (
+                    <>
+                        <div className="create-event-section">
+                            <h3>{isEditMode ? 'Edit Event' : 'Create Event'}</h3>
+                            <form className="admin-dashboard-form" onSubmit={handleCreateOrUpdateEvent}>
+                                <input
+                                    type="text"
+                                    placeholder="Event Title"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    required
+                                />
+                                <textarea
+                                    placeholder="Event Description"
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    required
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="Ticket Price"
+                                    value={ticketPrice}
+                                    onChange={(e) => setTicketPrice(e.target.value)}
+                                    required
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Photo URL"
+                                    value={photoUrl}
+                                    onChange={(e) => setPhotoUrl(e.target.value)}
+                                />
+                                <input
+                                    type="datetime-local"
+                                    placeholder="Event Date"
+                                    value={eventDate}
+                                    onChange={(e) => setEventDate(e.target.value)}
+                                    required
+                                />
+                                <button type="submit">{isEditMode ? 'Update Event' : 'Create Event'}</button>
+                            </form>
+                            {message && <p>{message}</p>}
                         </div>
-                    )}
-                </div>
+
+                        <div className="events-list-section">
+                            <h3>Events List</h3>
+                            <button className="dropdown-button" onClick={toggleEventListVisibility}>
+                                {isEventListVisible ? 'Hide Events' : 'Show Events'}
+                                <span className={`dropdown-arrow ${isEventListVisible ? 'up' : 'down'}`}></span>
+                            </button>
+                            {isLoading ? (
+                                <p>Loading...</p>
+                            ) : (
+                                isEventListVisible && (
+                                    <div className="events-list">
+                                        {events.map((event) => (
+                                            <div key={event.id} className="event-card">
+                                                <h4>{event.title}</h4>
+                                                <p>{event.description}</p>
+                                                <p>Ticket Price: ksh: {event.ticket_price}</p>
+                                                <p>Event Date: {new Date(event.event_date).toLocaleString()}</p>
+                                                {event.photo_url && <img src={event.photo_url} alt={event.title} className="event-photo" />}
+                                                <button onClick={() => handleEditEvent(event)}>Edit Event</button>
+                                                <button onClick={() => handleDeleteEvent(event.id)}>Delete Event</button>
+                                                <button onClick={() => handleViewMoreClick(event.id)}>View More</button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )
+                            )}
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );

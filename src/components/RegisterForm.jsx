@@ -29,7 +29,7 @@ const RegisterForm = ({ onRegister }) => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/register/user', userData); // adjust the endpoint
+      const response = await axios.post('http://localhost:5000/register', userData); // adjust the endpoint
       console.log(response.data);
       onRegister(); // optional: trigger a callback function after successful registration
       navigate('/login', { replace: true }); // navigate to login page after registration
