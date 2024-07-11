@@ -3,14 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AdminDashboard.css';
 
-const axiosInstance = axios.create({
-    baseURL: 'http://localhost:5000',
-    headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('admin_token')}`,
-    },
-});
-
 function AdminDashboard() {
     const [events, setEvents] = useState([]);
     const [title, setTitle] = useState('');
@@ -21,86 +13,85 @@ function AdminDashboard() {
     const [message, setMessage] = useState('');
     const [isEditMode, setIsEditMode] = useState(false);
     const [editEventId, setEditEventId] = useState(null);
-    const [viewEvent, setViewEvent] = useState(null); // State for viewing more details
+    const [viewEvent, setViewEvent] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [isEventListVisible, setIsEventListVisible] = useState(true); // State for event list visibility
+    const [isEventListVisible, setIsEventListVisible] = useState(true);
+    const [ticketsRemaining, setTicketsRemaining] = useState(0); // State for tickets remaining
     const navigate = useNavigate();
+
+       useEffect(() => {
+        fetchEvents();
+    }, []);
+
+    const api = axios.create({
+        baseURL: 'http://localhost:5000', // Adjust base URL to match your Flask server
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+        },
+    });
+
+    const token = localStorage.getItem('admin_token');
+    if (token) {
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+        navigate('/admin/login'); // Redirect to login if token is not present
+    }
 
     useEffect(() => {
         fetchEvents();
     }, []);
 
-    const fetchEvents = async () => {
+   const fetchEvents = async () => {
         try {
             setIsLoading(true);
-            const response = await axiosInstance.get('/events');
-            setEvents(response.data);
+            const response = await api.get('/events');
+            setEvents(response.data); // Update events state with fetched data
+            setMessage('');
         } catch (error) {
             console.error('Error fetching events:', error);
+            setMessage('Error fetching events. Please try again.');
         } finally {
             setIsLoading(false);
         }
     };
 
-    const handleCreateOrUpdateEvent = async (e) => {
-        e.preventDefault();
-        const eventData = {
-            title,
-            description,
-            ticket_price: parseFloat(ticketPrice),
-            photo_url: photoUrl,
-            event_date: new Date(eventDate).toISOString(),
-        };
-
-        try {
-            setIsLoading(true);
-            let response;
-            if (isEditMode) {
-                response = await axiosInstance.put(`/events/${editEventId}`, eventData);
-            } else {
-                response = await axiosInstance.post('/events', eventData);
-            }
-
-            if (response.status === 200 || response.status === 201) {
-                setMessage(isEditMode ? 'Event updated successfully!' : 'Event created successfully!');
-                clearForm();
-                fetchEvents();
-            } else {
-                setMessage('Failed to create or update event');
-            }
-        } catch (error) {
-            console.error('Error creating or updating event:', error);
-            setMessage('Error creating or updating event. Please try again.');
-        } finally {
-            setIsLoading(false);
+   const handleCreateOrUpdateEvent = async (event) => {
+    try {
+        let response;
+        if (isEditMode) {
+            response = await api.put(`/event/update/${editEventId}`, event);
+        } else {
+            response = await api.post('/event/create', event);
         }
-    };
+        console.log('Event created or updated:', response.data);
+        resetForm();
+        fetchEvents();
+    } catch (error) {
+        console.error('Error creating or updating event:', error);
+        setMessage('Error creating or updating event. Please try again.');
+    }
+};
 
-    const clearForm = () => {
-        setTitle('');
-        setDescription('');
-        setTicketPrice('');
-        setPhotoUrl('');
-        setEventDate('');
-        setIsEditMode(false);
-        setEditEventId(null);
-    };
+   const handleDeleteEvent = async (eventId) => {
+    try {
+        const response = await api.delete(`/event/delete/${eventId}`);
+        console.log('Event deleted:', response.data);
+        fetchEvents();
+    } catch (error) {
+        console.error('Error deleting event:', error);
+        setMessage('Error deleting event. Please try again.');
+    }
+};
 
-    const handleDeleteEvent = async (eventId) => {
+
+    const handleViewMoreClick = async (eventId) => {
         try {
-            setIsLoading(true);
-            const response = await axiosInstance.delete(`/events/${eventId}`);
-            if (response.status === 200) {
-                setMessage('Event deleted successfully!');
-                fetchEvents();
-            } else {
-                setMessage('Failed to delete event');
-            }
+            const response = await api.get(`/events/${eventId}`);
+            setViewEvent(response.data);
         } catch (error) {
-            console.error('Error deleting event:', error);
-            setMessage('Error deleting event. Please try again.');
-        } finally {
-            setIsLoading(false);
+            console.error('Error fetching event details:', error);
+            setMessage('Error fetching event details. Please try again.');
         }
     };
 
@@ -108,27 +99,22 @@ function AdminDashboard() {
         setTitle(event.title);
         setDescription(event.description);
         setTicketPrice(event.ticket_price.toString());
-        setPhotoUrl(event.photo_url);
+        setPhotoUrl(event.photo_url || '');
         setEventDate(new Date(event.event_date).toISOString().slice(0, 16));
         setIsEditMode(true);
         setEditEventId(event.id);
+        setTicketsRemaining(event.tickets_remaining); // Initialize tickets remaining from API
     };
 
-    const handleViewMoreClick = async (eventId) => {
-        try {
-            setIsLoading(true);
-            const response = await axiosInstance.get(`/events/${eventId}`);
-            if (response.status === 200) {
-                setViewEvent(response.data);
-            } else {
-                setMessage('Failed to fetch event details');
-            }
-        } catch (error) {
-            console.error('Error fetching event details:', error);
-            setMessage('Error fetching event details. Please try again.');
-        } finally {
-            setIsLoading(false);
-        }
+    const resetForm = () => {
+        setTitle('');
+        setDescription('');
+        setTicketPrice('');
+        setPhotoUrl('');
+        setEventDate('');
+        setIsEditMode(false);
+        setEditEventId(null);
+        setTicketsRemaining(0); // Reset tickets remaining
     };
 
     const toggleEventListVisibility = () => {
@@ -137,7 +123,21 @@ function AdminDashboard() {
 
     const handleLogout = () => {
         localStorage.removeItem('admin_token');
-        navigate('/admin/login'); e
+        navigate('/admin/login');
+    };
+
+    const handleBackToEventsList = () => {
+        setViewEvent(null);
+    };
+
+    const handleIncreaseTickets = () => {
+        setTicketsRemaining(ticketsRemaining + 1);
+    };
+
+    const handleDecreaseTickets = () => {
+        if (ticketsRemaining > 0) {
+            setTicketsRemaining(ticketsRemaining - 1);
+        }
     };
 
     return (
@@ -156,13 +156,23 @@ function AdminDashboard() {
                         <p>Ticket Price: ksh: {viewEvent.ticket_price}</p>
                         <p>Event Date: {new Date(viewEvent.event_date).toLocaleString()}</p>
                         {viewEvent.photo_url && <img src={viewEvent.photo_url} alt={viewEvent.title} className="event-photo" />}
-                        <button onClick={() => setViewEvent(null)}>Back to Events List</button>
+                        <button onClick={handleBackToEventsList}>Back to Events List</button>
                     </div>
                 ) : (
                     <>
                         <div className="create-event-section">
                             <h3>{isEditMode ? 'Edit Event' : 'Create Event'}</h3>
-                            <form className="admin-dashboard-form" onSubmit={handleCreateOrUpdateEvent}>
+                            <form className="admin-dashboard-form" onSubmit={(e) => {
+                                e.preventDefault();
+                                handleCreateOrUpdateEvent({
+                                    title,
+                                    description,
+                                    ticket_price: parseFloat(ticketPrice),
+                                    photo_url: photoUrl,
+                                    event_date: eventDate,
+                                    tickets_remaining: ticketsRemaining, // Include tickets remaining in the payload
+                                });
+                            }}>
                                 <input
                                     type="text"
                                     placeholder="Event Title"
@@ -196,6 +206,21 @@ function AdminDashboard() {
                                     onChange={(e) => setEventDate(e.target.value)}
                                     required
                                 />
+                                <div className="tickets-remaining">
+                                    <label>Tickets Remaining:</label>
+                                    <div className="tickets-input-group">
+                                        <button type="button" onClick={handleDecreaseTickets}>-</button>
+                                        <input
+                                            type="number"
+                                            value={ticketsRemaining}
+                                            onChange={(e) => setTicketsRemaining(parseInt(e.target.value))}
+                                            min="0"
+                                            step="1"
+                                            required
+                                        />
+                                        <button type="button" onClick={handleIncreaseTickets}>+</button>
+                                    </div>
+                                </div>
                                 <button type="submit">{isEditMode ? 'Update Event' : 'Create Event'}</button>
                             </form>
                             {message && <p>{message}</p>}
@@ -218,6 +243,7 @@ function AdminDashboard() {
                                                 <p>{event.description}</p>
                                                 <p>Ticket Price: ksh: {event.ticket_price}</p>
                                                 <p>Event Date: {new Date(event.event_date).toLocaleString()}</p>
+                                                <p>Tickets Remaining: {event.tickets_remaining}</p>
                                                 {event.photo_url && <img src={event.photo_url} alt={event.title} className="event-photo" />}
                                                 <button onClick={() => handleEditEvent(event)}>Edit Event</button>
                                                 <button onClick={() => handleDeleteEvent(event.id)}>Delete Event</button>

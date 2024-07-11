@@ -8,12 +8,12 @@ function ExploreEvents() {
   const [searchTerm, setSearchTerm] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
-  const [showMore, setShowMore] = useState({}); // Add a state to track which events to show more
+  const [showMore, setShowMore] = useState({});
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const token = localStorage.getItem('token'); // Assuming you store the JWT in localStorage
+        const token = localStorage.getItem('token');
         const config = {
           headers: { Authorization: `Bearer ${token}` }
         };
@@ -27,7 +27,11 @@ function ExploreEvents() {
     fetchEvents();
   }, []);
 
-  const storedLikedEvents = JSON.parse(localStorage.getItem('likedEvents')) || [];
+  useEffect(() => {
+    const storedLikedEvents = JSON.parse(localStorage.getItem('likedEvents')) || [];
+    setLikedEvents(storedLikedEvents);
+  }, []);
+
   useEffect(() => {
     localStorage.setItem('likedEvents', JSON.stringify(likedEvents));
   }, [likedEvents]);
@@ -67,8 +71,6 @@ function ExploreEvents() {
   return (
     <div className="explore-events-container">
       <h1 className="explore-events-title">Explore Events</h1>
-
-      {/* Search input */}
       <input
         type="text"
         placeholder="Search events by title..."
@@ -76,8 +78,6 @@ function ExploreEvents() {
         onChange={handleSearchChange}
         className="search-input"
       />
-
-      {/* Price range inputs */}
       <div className="price-range-inputs">
         <input
           type="number"
@@ -95,7 +95,6 @@ function ExploreEvents() {
           className="price-input"
         />
       </div>
-
       <div className="events-grid">
         {filteredEvents.length > 0 ? (
           filteredEvents.map((event) => (
@@ -104,13 +103,16 @@ function ExploreEvents() {
               <h3 className="event-title">{event.title}</h3>
               <p className="event-description">{event.description}</p>
               <p className="event-price">Ticket Price: ksh {event.ticket_price}</p>
+              <p className="event-tickets-remaining">Tickets Remaining: {event.tickets_remaining}</p>
               <p className="event-date">Event Date: {new Date(event.event_date).toLocaleString()}</p>
               <button
                 className={`like-button ${likedEvents.includes(event.id) ? 'liked' : ''}`}
                 onClick={() => toggleLike(event.id)}>
                 {likedEvents.includes(event.id) ? 'Unlike' : 'Like'}
               </button>
-              <a href="#" onClick={() => handleShowMore(event.id)}>View More</a>
+              <a href="#" onClick={() => handleShowMore(event.id)}>
+                {showMore[event.id] ? 'Show Less' : 'View More'}
+              </a>
               {showMore[event.id] && (
                 <div className="event-more-info">
                   <p>{event.description}</p>
