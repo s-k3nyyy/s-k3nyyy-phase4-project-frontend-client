@@ -1,15 +1,41 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; 
+    background-size: cover;
+    background-position: center;
+}
+
 .bookmarked-events-container {
+    max-width: 1400px;
+    margin: 20px auto;
     padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    position: relative;
+}
+
+.home-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    color: #333;
+    text-decoration: none;
+}
+
+.home-icon:hover {
+    color: #ccac00;
 }
 
 .bookmarked-events-title {
-    font-size: 2em;
-    margin-bottom: 20px;
     text-align: center;
-    color: #333;
-    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5em;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    color: #e7a427;
+    font-family: 'Dancing Script', cursive;
 }
 
 .events-grid {
@@ -20,16 +46,16 @@
 
 .event-card {
     background-color: #ffffff;
+    border: 1px solid #ddd; 
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+    padding: 20px;
     transition: transform 0.2s, box-shadow 0.2s;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    height: 420px;
 }
 
 .event-card:hover {
@@ -39,23 +65,22 @@
 
 .event-photo {
     width: 100%;
-    height: auto;
+    height: 200px; 
     border-radius: 10px;
-    margin-bottom: 10px;
     object-fit: cover;
-    max-height: 100px;
+    margin-bottom: 15px;
 }
 
 .event-title {
     font-size: 1.2em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     color: #333;
     font-family: 'Montserrat', sans-serif;
 }
 
 .event-description {
     font-size: 0.9em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     color: #555;
     font-family: 'Open Sans', sans-serif;
 }

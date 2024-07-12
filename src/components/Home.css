@@ -18,16 +18,17 @@ body {
 body::before {
     content: '';
     background-image: url('../assets/pic1.jpeg');
-    background-size: cover;
-    background-position: center;
-    position: fixed;
+    background-size: cover; 
+    background-position: center; 
+    position: fixed; 
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: -1;
-    filter: blur(8px);
-    opacity: 1;
+    z-index: -1; /* Behind all other content */
+    opacity: 0.8; /* Semi-transparent overlay */
+    background-color: rgba(0, 0, 0, 0.5); /* Black overlay */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
 }
 
 .head nav {
@@ -78,12 +79,17 @@ body::before {
     text-decoration: none;
     color: #fff;
     font-weight: bold;
+    padding: 10px 15px; 
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease; 
+    font-family: 'Bodoni Moda SC', serif;
+    font-size: larger;
 }
 
 .nav-links li a:hover {
-    color: #ccac00;
+    background-color: rgba(0, 0, 0, 0.863); 
+    color: #ccac00; 
 }
-
 .event-ticketing {
     font-size: 20px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -110,8 +116,7 @@ body::before {
     font-family: 'Montserrat', sans-serif;
 }
 
-/* Reuse styles for the events grid and event cards from ExploreEvents.css */
-/* Or import ExploreEvents.css if sharing styles across components */
+
 .events-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -171,4 +176,12 @@ body::before {
     font-size: 0.9em;
     color: #999;
     font-family: 'Open Sans', sans-serif;
+}
+.material-icons {
+    list-style-type: none;
+    font-size: 24px; 
+    margin-right: 10px;
+    position: relative;
+    bottom: 1px; 
+    right: 4px;
 }

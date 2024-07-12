@@ -37,7 +37,11 @@ function Home({ onLogout }) {
                         <span className='site-name'>Event</span><span className='site-tagline'>Booking</span>
                     </h1>
                     <ul className="nav-links">
-                        <li><NavLink exact to="/home" activeClassName="active-link">Home</NavLink></li>
+                        <li className='material-icons'>
+                            <NavLink exact to="/home" activeClassName="active-link">
+                                <span className="material-symbols-outlined">home</span>
+                            </NavLink>
+                        </li>
                         <li><NavLink to="/pricing" activeClassName="active-link">Pricing</NavLink></li>
                         <li><NavLink to="/bookmark" activeClassName="active-link">Bookmarks</NavLink></li>
                         <li><NavLink to="/explore" activeClassName="active-link">Explore Events</NavLink></li>

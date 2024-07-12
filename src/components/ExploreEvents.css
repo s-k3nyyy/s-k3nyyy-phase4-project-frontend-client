@@ -1,35 +1,37 @@
-.search-and-filter-container {
-    position: sticky;
-    top: 0;
-    background-color: #ffffff77;
-    padding: 20px;
-    border-bottom: 1px solid #ccc;
-    z-index: 1;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; 
+    background-size: cover;
+    background-position: center;
 }
 
-.events-container {
+.explore-events-container {
     max-width: 1400px;
     margin: 20px auto;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
 }
 
-.events-title {
+.explore-events-title {
     text-align: center;
     font-size: 2.5em;
-    margin-top: 80px;
+    margin-top: 40px;
+    margin-bottom: 30px;
     color: #e7a427;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Dancing Script', cursive;
 }
 
 .search-input {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     font-size: 1.2em;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 8px;
     margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
 .price-range-inputs {
@@ -40,27 +42,29 @@
 
 .price-input {
     width: 45%;
-    padding: 10px;
+    padding: 12px;
     font-size: 1.2em;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 8px;
+    box-sizing: border-box;
 }
 
 .events-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
 }
 
 .event-card {
     background-color: #ffffff;
+    border: 1px solid #ddd; 
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 10px;
+    padding: 20px;
     transition: transform 0.2s, box-shadow 0.2s;
     overflow: hidden;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     text-align: center;
 }
@@ -71,52 +75,53 @@
 }
 
 .event-photo {
-    width: 100px;
-    height: 450px;
+    width: 100%;
+    height: 200px; 
     border-radius: 10px;
-    margin-bottom: 15px;
     object-fit: cover;
+    margin-bottom: 15px;
 }
 
 .event-title {
     font-size: 1.2em;
-    margin-bottom: 210px;
-    color: #000000;
+    margin-bottom: 10px;
+    color: #333;
     font-family: 'Montserrat', sans-serif;
 }
 
 .event-description {
     font-size: 0.9em;
     margin-bottom: 10px;
-    color: #000000;
+    color: #555;
     font-family: 'Open Sans', sans-serif;
 }
 
 .event-price {
     font-size: 1em;
-    color: #000000;
+    color: #777;
     font-family: 'Open Sans', sans-serif;
     margin-bottom: 5px;
 }
 
 .event-date {
     font-size: 0.9em;
-    color: #000000;
+    color: #999;
     font-family: 'Open Sans', sans-serif;
 }
 
 .like-button {
-    background-color: #4CAF50;
+    background-color: #007bff; 
     color: #ffffff;
     border: none;
     padding: 10px 20px;
     font-size: 1em;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .like-button:hover {
-    background-color: #3e8e41;
+    background-color: #0056b3; 
 }
 
 .like-button.liked {
@@ -127,6 +132,71 @@
 .no-events-message {
     text-align: center;
     font-size: 1.2em;
-    color: #000000;
+    color: #333;
     margin-bottom: 20px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.home-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px; 
+    text-decoration: none;
+    color: #fff; 
+    background-color: rgba(0, 0, 0, 0.7); 
+    border-radius: 50%; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: absolute;
+    top: 10px; 
+    left: 10px; 
+    margin: 10px; 
+}
+
+.home-icon:hover {
+    background-color: rgba(0, 0, 0, 0.9); 
+    color: #ccac00; 
+}
+
+.home-icon .material-symbols-outlined {
+    font-size: 24px; 
+    line-height: 1; 
+}
+
+.active-link.home-icon {
+    background-color: #ccac00; 
+    color: #fff; 
+}
+
+.bookmark-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px; 
+    height: 50px; 
+    text-decoration: none;
+    color: #fff; 
+    background-color: rgba(0, 0, 0, 0.7); 
+    border-radius: 50%; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: absolute;
+    top: 10px; 
+    right: 100px; 
+    margin: 10px; 
+}
+
+.bookmark-icon:hover {
+    background-color: rgba(0, 0, 0, 0.9); 
+    color: #ccac00; 
+}
+
+.bookmark-icon .material-symbols-outlined {
+    font-size: 24px; 
+    line-height: 1; 
+}
+
+.active-link.bookmark-icon {
+    background-color: #ccac00; 
+    color: #fff; 
 }
