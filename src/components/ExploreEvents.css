@@ -1,132 +1,308 @@
-.search-and-filter-container {
-    position: sticky;
-    top: 0;
-    background-color: #ffffff77;
+/* ExploreEvents.css */
+
+/* Container styling */
+.explore-events-container {
     padding: 20px;
-    border-bottom: 1px solid #ccc;
-    z-index: 1;
 }
 
-.events-container {
-    max-width: 1400px;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.events-title {
-    text-align: center;
-    font-size: 2.5em;
-    margin-top: 80px;
-    color: #e7a427;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.search-input {
-    width: 100%;
-    padding: 10px;
-    font-size: 1.2em;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+/* Title styling */
+.explore-events-title {
+    font-size: 28px;
+    font-weight: bold;
     margin-bottom: 20px;
+    color: #333;
+    /* Dark gray text */
 }
 
+/* Search input styling */
+.search-input {
+    background-color: #28a745;
+    /* Green background */
+    color: white;
+    /* White text */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 10px;
+}
+
+.search-input::placeholder {
+    color: #fff;
+    /* White placeholder text */
+}
+
+.search-input:focus {
+    outline: none;
+    background-color: #fff;
+    /* White background when focused */
+    color: #333;
+    /* Dark gray text when focused */
+}
+
+/* Price input styling */
+.price-input {
+    background-color: #dc3545;
+    /* Red background */
+    color: white;
+    /* White text */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 100px;
+    margin-left: 10px;
+}
+
+.price-input::placeholder {
+    color: #fff;
+    /* White placeholder text */
+}
+
+.price-input:focus {
+    outline: none;
+    background-color: #fff;
+    /* White background when focused */
+    color: #333;
+    /* Dark gray text when focused */
+}
+
+/* Price range inputs container */
 .price-range-inputs {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
 
-.price-input {
-    width: 45%;
-    padding: 10px;
-    font-size: 1.2em;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+.price-range-inputs span {
+    color: #fff;
+    /* White text */
+    margin: 0 10px;
 }
 
+/* Events grid styling */
 .events-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
 }
 
+/* Event card styling */
 .event-card {
-    background-color: #ffffff;
+    background-color: #fff;
+    /* White background */
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.3s ease;
     overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-align: center;
+    /* Ensures no content overflow */
 }
 
 .event-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.event-photo {
-    width: 100px;
-    height: 450px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    object-fit: cover;
-}
-
+/* Event title styling */
 .event-title {
-    font-size: 1.2em;
-    margin-bottom: 210px;
-    color: #000000;
-    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #333;
+    /* Dark gray text */
 }
 
+/* Event description styling */
 .event-description {
-    font-size: 0.9em;
-    margin-bottom: 10px;
-    color: #000000;
-    font-family: 'Open Sans', sans-serif;
+    margin-top: 10px;
+    color: #666;
+    /* Medium gray text */
 }
 
+/* Event price styling */
 .event-price {
-    font-size: 1em;
-    color: #000000;
-    font-family: 'Open Sans', sans-serif;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    color: #dc3545;
+    /* Red text */
+}
+
+/* Event tickets remaining styling */
+.event-tickets-remaining {
+    margin-top: 10px;
+    color: #d60101;
+
+
 }
 
 .event-date {
-    font-size: 0.9em;
-    color: #000000;
-    font-family: 'Open Sans', sans-serif;
+    margin-top: 10px;
+    color: #333;
+
 }
 
+
 .like-button {
-    background-color: #4CAF50;
-    color: #ffffff;
-    border: none;
+    background-color: #28a745;
+    color: white;
     padding: 10px 20px;
-    font-size: 1em;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    border-radius: 10px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
 }
 
 .like-button:hover {
-    background-color: #3e8e41;
+    background-color: #218838;
+    /* Dark green on hover */
 }
 
 .like-button.liked {
-    background-color: #999;
-    color: #ffffff;
+    background-color: #dc3545;
+    /* Red background when liked */
 }
 
+/* Show more link styling */
+.event-card a {
+    color: #007bff;
+    /* Blue link */
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+    margin-top: 10px;
+}
+
+.event-card a:hover {
+    text-decoration: underline;
+    /* Underline on hover */
+}
+
+/* Expanded event card styling */
+.event-card.expanded {
+    grid-column: span 2;
+    /* Span 2 columns when expanded */
+}
+
+/* Event photo styling */
+.event-photo {
+    width: 100%;
+    height: 200px;
+    /* Adjust height as needed */
+    object-fit: cover;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.event-photo.expanded-photo {
+    height: 300px;
+    /* Adjust height when expanded */
+    object-fit: contain;
+}
+
+/* Ticket count input styling */
+.ticket-count-input {
+    width: 60px;
+    padding: 5px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    /* Light gray border */
+    border-radius: 5px;
+}
+
+.ticket-count-input:focus {
+    outline: none;
+    border-color: #007bff;
+    /* Blue border when focused */
+}
+
+/* Buy ticket button styling */
+.buy-ticket-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: -30px;
+    transition: background-color 0.3s ease;
+    margin-left: 260px;
+}
+
+.buy-ticket-button:hover {
+    background-color: #0056b3;
+
+}
+
+/* No events message styling */
 .no-events-message {
+    grid-column: span 4;
     text-align: center;
-    font-size: 1.2em;
-    color: #000000;
-    margin-bottom: 20px;
+    color: #333;
+    /* Dark gray text */
+}
+
+/* Summary card overlay styling */
+.summary-card-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Summary card styling */
+.summary-card {
+    background-color: #e0717163;
+    /* White background */
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Phone input styling */
+.phone-input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    /* Light gray border */
+    border-radius: 5px;
+}
+
+.phone-input:focus {
+    outline: none;
+    border-color: #007bff;
+    /* Blue border when focused */
+}
+
+.payment-button,
+.cancel-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.payment-button:hover,
+.cancel-button:hover {
+    background-color: #0056b3;
+}
+
+.events-grid {
+    height: 1px !important;
+}
+
+.ticket-count-input {
+    margin-top: 30px;
 }
