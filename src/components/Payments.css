@@ -1,0 +1,38 @@
+body {
+    color: black;
+}
+
+table {
+    background-color: beige;
+}
+
+#payment-id {
+    text-decoration: underline;
+    color: blanchedalmond;
+}
+
+#payment-edit {
+    background-color: blue;
+    margin-bottom: 10px;
+}
+
+#payment-edit:hover {
+    background-color: orange;
+}
+
+#payment-delete {
+    background-color: blue;
+    margin-bottom: 10px;
+}
+
+#payment-delete:hover {
+    background-color: red;
+}
+
+#all-btn {
+    background-color: blue;
+}
+
+#all-btn:hover {
+    background-color: orange;
+}

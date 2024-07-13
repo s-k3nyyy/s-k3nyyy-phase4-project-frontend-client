@@ -1,211 +1,371 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './ExploreEvents.css';
+import React, { useState, useEffect } from "react";
+import "./ExploreEvents.css";
 
 function ExploreEvents() {
   const [events, setEvents] = useState([]);
+  const [editingEvent, setEditingEvent] = useState(null);
+  const [newEventData, setNewEventData] = useState({
+    title: "",
+    description: "",
+    location: "",
+    date_time: "",
+    organizer_id: "",
+  });
+  const [isAdmin, setIsAdmin] = useState(false);
   const [likedEvents, setLikedEvents] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
-  const [showMore, setShowMore] = useState({});
-  const [ticketCounts, setTicketCounts] = useState({});
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [summary, setSummary] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/events');
-        setEvents(response.data);
-      } catch (error) {
-        console.error('Error fetching events:', error);
-      }
-    };
-
     fetchEvents();
+    checkAdminStatus();
+    fetchLikedEvents();
   }, []);
 
-  useEffect(() => {
-    const storedLikedEvents = JSON.parse(localStorage.getItem('likedEvents')) || [];
-    setLikedEvents(storedLikedEvents);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('likedEvents', JSON.stringify(likedEvents));
-  }, [likedEvents]);
-
-  const toggleLike = (eventId) => {
-    setLikedEvents((prevLikedEvents) => {
-      if (prevLikedEvents.includes(eventId)) {
-        return prevLikedEvents.filter(id => id !== eventId);
-      } else {
-        return [...prevLikedEvents, eventId];
-      }
-    });
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleMinPriceChange = (event) => {
-    setMinPrice(event.target.value);
-  };
-
-  const handleMaxPriceChange = (event) => {
-    setMaxPrice(event.target.value);
-  };
-
-  const handleShowMore = (eventId) => {
-    setShowMore((prevShowMore) => ({ ...prevShowMore, [eventId]: !prevShowMore[eventId] }));
-  };
-
-  const handleTicketCountChange = (eventId, value) => {
-    if (value <= 5 && value >= 0) {
-      setTicketCounts((prevCounts) => ({ ...prevCounts, [eventId]: value }));
-    }
-  };
-
-  const handleBuyTicket = (event) => {
-    const eventId = event.id;
-    const ticketCount = ticketCounts[eventId] || 0;
-    const totalAmount = event.ticket_price * ticketCount;
-
-    if (ticketCount > 0 && ticketCount <= 5) {
-      setSummary({
-        eventId,
-        title: event.title,
-        ticketCount,
-        totalAmount
+  const checkAdminStatus = () => {
+    const token = localStorage.getItem("token");
+    fetch("http://127.0.0.1:5555/check_admin", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setIsAdmin(data.is_admin);
+      })
+      .catch((error) => {
+        console.error("Error checking admin status:", error);
       });
+  };
+
+  const fetchEvents = () => {
+    const token = localStorage.getItem("token");
+    fetch("http://127.0.0.1:5555/events", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          console.error("Fetch events failed:", response.statusText);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setEvents(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching events:", error);
+      });
+  };
+
+  const fetchLikedEvents = () => {
+    const token = localStorage.getItem("token");
+    fetch("http://127.0.0.1:5555/liked-events", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          console.error("Fetch liked events failed:", response.statusText);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setLikedEvents(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching liked events:", error);
+      });
+  };
+
+  const handleDelete = (eventId) => {
+    const token = localStorage.getItem("token");
+    fetch(`http://127.0.0.1:5555/events/${eventId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          setEvents(events.filter((event) => event.id !== eventId));
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting event:", error);
+      });
+  };
+
+  const handleUpdate = (event) => {
+    setEditingEvent(event);
+  };
+
+  const handleUpdateSubmit = (eventId) => {
+    const token = localStorage.getItem("token");
+    fetch(`http://127.0.0.1:5555/events/${eventId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(editingEvent),
+    })
+      .then((response) => {
+        if (response.ok) {
+          fetchEvents();
+          setEditingEvent(null);
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating event:", error);
+      });
+  };
+
+  const handleCreateEvent = (e) => {
+    e.preventDefault();
+    const formattedDateTime = new Date(newEventData.date_time)
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+    const token = localStorage.getItem("token");
+
+    fetch("http://127.0.0.1:5555/events", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ ...newEventData, date_time: formattedDateTime }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((data) => {
+            throw new Error(data.error || "Error creating event");
+          });
+        }
+        return response.json();
+      })
+      .then(() => {
+        fetchEvents();
+        setNewEventData({
+          title: "",
+          description: "",
+          location: "",
+          date_time: "",
+          organizer_id: "",
+        });
+      })
+      .catch((error) => {
+        console.error(error.message);
+        alert(error.message);
+      });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewEventData({ ...newEventData, [name]: value });
+  };
+
+  const handleLike = (eventId) => {
+    const token = localStorage.getItem("token");
+    const isLiked = likedEvents.some((event) => event.id === eventId);
+
+    if (isLiked) {
+      fetch(`http://127.0.0.1:5555/events/${eventId}/unlike`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            fetchEvents();
+            fetchLikedEvents();
+          }
+        })
+        .catch((error) => {
+          console.error("Error unliking event:", error);
+        });
     } else {
-      alert('Please enter a valid number of tickets (1-5).');
+      fetch(`http://127.0.0.1:5555/events/${eventId}/like`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            fetchEvents();
+            fetchLikedEvents();
+          }
+        })
+        .catch((error) => {
+          console.error("Error liking event:", error);
+        });
     }
   };
 
-  const handlePayment = () => {
-    console.log('Processing payment for:', summary, 'Phone number:', phoneNumber);
-    setSummary(null);
-    setPhoneNumber('');
+  const isEventLiked = (eventId) => {
+    return likedEvents.some((event) => event.id === eventId);
   };
-
-  const handleCancel = () => {
-    setSummary(null);
-    setPhoneNumber('');
-  };
-
-  const filteredEvents = events.filter((event) =>
-    event.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    (!minPrice || event.ticket_price >= parseInt(minPrice, 10)) &&
-    (!maxPrice || event.ticket_price <= parseInt(maxPrice, 10))
-  );
 
   return (
-    <div className="explore-events-container">
-      <div className={summary ? 'blur-background' : ''}>
-        <h1 className="explore-events-title">Explore Events</h1>
-        <input
-          type="text"
-          placeholder="Search events by title..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-          className="search-input"
-        />
-        <div className="price-range-inputs">
-          <input
-            type="number"
-            placeholder="Min Price"
-            value={minPrice}
-            onChange={handleMinPriceChange}
-            className="price-input"
-          />
-          <span>-</span>
-          <input
-            type="number"
-            placeholder="Max Price"
-            value={maxPrice}
-            onChange={handleMaxPriceChange}
-            className="price-input"
-          />
-        </div>
-        <div className="events-grid">
-          {filteredEvents.length > 0 ? (
-            filteredEvents.map((event) => (
-              <div
-                key={event.id}
-                className={`event-card ${showMore[event.id] ? 'expanded' : ''}`}
-                onClick={() => handleShowMore(event.id)}
-              >
-                {event.photo_url && (
-                  <img
-                    src={event.photo_url}
-                    alt={event.title}
-                    className={`event-photo ${showMore[event.id] ? 'expanded-photo' : ''}`}
-                  />
-                )}
-                <h3 className="event-title">{event.title}</h3>
-                <p className="event-description">{event.description}</p>
-                <p className="event-price">Ticket Price: ksh {event.ticket_price}</p>
-                <p className="event-tickets-remaining">Tickets Remaining: {event.tickets_remaining}</p>
-                <p className="event-date">Event Date: {new Date(event.event_date).toLocaleString()}</p>
-                <button
-                  className={`like-button ${likedEvents.includes(event.id) ? 'liked' : ''}`}
-                  onClick={() => toggleLike(event.id)}
-                >
-                  {likedEvents.includes(event.id) ? 'Unlike' : 'Like'}
-                </button>
-                {showMore[event.id] && (
-                  <>
-                    <div className="event-more-info">
-                      <p>{event.description}</p>
-                    </div>
-                    <input
-                      type="number"
-                      min="1"
-                      max="5"
-                      value={ticketCounts[event.id] || 0}
-                      onChange={(e) => handleTicketCountChange(event.id, parseInt(e.target.value, 10))}
-                      className="ticket-count-input"
-                    />
-                    <button onClick={() => handleBuyTicket(event)} className="buy-ticket-button">
-                      Buy Ticket
-                    </button>
-                  </>
-                )}
-              </div>
-            ))
-          ) : (
-            <p className="no-events-message">No events found matching your criteria.</p>
-          )}
-        </div>
-      </div>
-
-      {summary && (
-        <div className="summary-card-overlay">
-          <div className="summary-card">
-            <h2>Order Summary</h2>
-            <p>Event: {summary.title}</p>
-            <p>Number of Tickets: {summary.ticketCount}</p>
-            <p>Total Amount: ksh {summary.totalAmount}</p>
+    <div>
+      <h2>Events</h2>
+      {isAdmin && (
+        <div>
+          <form onSubmit={handleCreateEvent}>
             <input
-              type="tel"
-              placeholder="Enter your phone number"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className="phone-input"
-            />
-            <button onClick={handlePayment} className="payment-button">
-              Proceed to Payment
-            </button>
-            <button onClick={handleCancel} className="cancel-button">
-              Cancel
-            </button>
-          </div>
+              type="text"
+              name="title"
+              placeholder="Title"
+              value={newEventData.title}
+              onChange={handleInputChange}
+            />{" "}
+            <input
+              type="text"
+              name="description"
+              placeholder="Description"
+              value={newEventData.description}
+              onChange={handleInputChange}
+            />{" "}
+            <input
+              type="text"
+              name="location"
+              placeholder="Location"
+              value={newEventData.location}
+              onChange={handleInputChange}
+            />{" "}
+            <input
+              type="datetime-local"
+              name="date_time"
+              value={newEventData.date_time}
+              onChange={handleInputChange}
+            />{" "}
+            <input
+              type="text"
+              name="organizer_id"
+              placeholder="Organizer ID"
+              value={newEventData.organizer_id}
+              onChange={handleInputChange}
+            />{" "}
+            <button type="submit">Create Event</button>
+          </form>
         </div>
       )}
+      <div className="events-grid">
+        {events.map((event) => (
+          <div key={event.id} className="event-card">
+            <div className="event-details">
+              {editingEvent && editingEvent.id === event.id ? (
+                <div>
+                  <input
+                    type="text"
+                    name="title"
+                    value={editingEvent.title}
+                    onChange={(e) =>
+                      setEditingEvent({
+                        ...editingEvent,
+                        title: e.target.value,
+                      })
+                    }
+                  />{" "}
+                  <br />
+                  <input
+                    type="text"
+                    name="description"
+                    value={editingEvent.description}
+                    onChange={(e) =>
+                      setEditingEvent({
+                        ...editingEvent,
+                        description: e.target.value,
+                      })
+                    }
+                  />{" "}
+                  <br />
+                  <input
+                    type="text"
+                    name="location"
+                    value={editingEvent.location}
+                    onChange={(e) =>
+                      setEditingEvent({
+                        ...editingEvent,
+                        location: e.target.value,
+                      })
+                    }
+                  />{" "}
+                  <br />
+                  <input
+                    type="datetime-local"
+                    name="date_time"
+                    value={new Date(editingEvent.date_time)
+                      .toISOString()
+                      .slice(0, 16)}
+                    onChange={(e) =>
+                      setEditingEvent({
+                        ...editingEvent,
+                        date_time: e.target.value,
+                      })
+                    }
+                  />{" "}
+                  <br />
+                  <input
+                    type="text"
+                    name="organizer_id"
+                    value={editingEvent.organizer_id}
+                    onChange={(e) =>
+                      setEditingEvent({
+                        ...editingEvent,
+                        organizer_id: e.target.value,
+                      })
+                    }
+                  />{" "}
+                  <br />
+                  <button onClick={() => handleUpdateSubmit(event.id)}>
+                    Save
+                  </button>
+                  <button onClick={() => setEditingEvent(null)}>Cancel</button>
+                </div>
+              ) : (
+                <div>
+                  <h3>{event.title}</h3>
+                  <p>{event.description}</p>
+                  <p>
+                    <strong>Location:</strong> {event.location}
+                  </p>
+                  <p>
+                    <strong>Date:</strong>{" "}
+                    {new Date(event.date_time).toLocaleString()}
+                  </p>
+                  <div className="event-actions">
+                    {!isAdmin && (
+                      <div className="like-bookmark">
+                        <button onClick={() => handleLike(event.id)}>
+                          <span role="img" aria-label="heart">
+                            {isEventLiked(event.id) ? "❤️" : "🤍"}
+                          </span>{" "}
+                          {event.likes}
+                        </button>
+                        <button>Bookmark</button>
+                      </div>
+                    )}
+                    {isAdmin && (
+                      <div className="admin-actions">
+                        <button onClick={() => handleUpdate(event)}>
+                          Edit
+                        </button>
+                        <button onClick={() => handleDelete(event.id)}>
+                          Delete
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

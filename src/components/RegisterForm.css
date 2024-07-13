@@ -1,25 +1,26 @@
-body {
+.RegisterForm {
+    margin-top: 250px;
+    margin-left: 300px;
+    margin-right: 300px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #9c9b9b;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 20px yellow;
+    text-align: center;
+    color: white;
 }
 
-.RegisterForm {
-    max-width: 300px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #bdbdbd;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
+.RegisterForm:hover {
+    filter: drop-shadow(2px 2px 20px blue);
+    box-shadow: 2px 2px 20px blue;
 }
 
 .RegisterForm h2 {
     margin-bottom: 10px;
-    color: #333333;
+    color: yellow;
     font-size: 1.3rem;
     width: 200px;
 }
@@ -31,7 +32,6 @@ body {
 
 .RegisterForm label {
     margin-bottom: 10px;
-    color: #555555;
     text-align: left;
 
 }
@@ -43,7 +43,6 @@ body {
     width: 100%;
     padding: 10px;
     margin-bottom: 1px;
-    border: 1px solid #dddddd;
     border-radius: 5px;
     font-size: 14px;
 }

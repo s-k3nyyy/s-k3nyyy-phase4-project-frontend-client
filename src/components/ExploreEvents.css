@@ -1,308 +1,89 @@
-/* ExploreEvents.css */
-
-/* Container styling */
-.explore-events-container {
-    padding: 20px;
+body {
+    color: black;
 }
 
-/* Title styling */
-.explore-events-title {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
-    /* Dark gray text */
+table {
+    background-color: beige;
 }
 
-/* Search input styling */
-.search-input {
-    background-color: #28a745;
-    /* Green background */
-    color: white;
-    /* White text */
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    width: 100%;
-    max-width: 300px;
+#payment-id {
+    text-decoration: underline;
+    color: blanchedalmond;
+}
+
+#payment-edit {
+    background-color: blue;
     margin-bottom: 10px;
 }
 
-.search-input::placeholder {
-    color: #fff;
-    /* White placeholder text */
+#payment-edit:hover {
+    background-color: orange;
 }
 
-.search-input:focus {
-    outline: none;
-    background-color: #fff;
-    /* White background when focused */
-    color: #333;
-    /* Dark gray text when focused */
+#payment-delete {
+    background-color: blue;
+    margin-bottom: 10px;
 }
 
-/* Price input styling */
-.price-input {
-    background-color: #dc3545;
-    /* Red background */
-    color: white;
-    /* White text */
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    width: 100px;
-    margin-left: 10px;
+#payment-delete:hover {
+    background-color: red;
 }
 
-.price-input::placeholder {
-    color: #fff;
-    /* White placeholder text */
+#all-btn {
+    background-color: blue;
 }
 
-.price-input:focus {
-    outline: none;
-    background-color: #fff;
-    /* White background when focused */
-    color: #333;
-    /* Dark gray text when focused */
+#all-btn:hover {
+    background-color: orange;
 }
 
-/* Price range inputs container */
-.price-range-inputs {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.price-range-inputs span {
-    color: #fff;
-    /* White text */
-    margin: 0 10px;
-}
-
-/* Events grid styling */
 .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    padding: 20px;
 }
 
-/* Event card styling */
 .event-card {
-    background-color: #fff;
-    /* White background */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    overflow: hidden;
-    /* Ensures no content overflow */
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
 }
 
-.event-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* Event title styling */
-.event-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 10px;
+.event-details h3 {
+    margin: 0;
+    padding: 0;
     color: #333;
-    /* Dark gray text */
 }
 
-/* Event description styling */
-.event-description {
-    margin-top: 10px;
+.event-details p {
+    margin: 5px 0;
     color: #666;
-    /* Medium gray text */
 }
 
-/* Event price styling */
-.event-price {
-    margin-top: 10px;
-    color: #dc3545;
-    /* Red text */
-}
-
-/* Event tickets remaining styling */
-.event-tickets-remaining {
-    margin-top: 10px;
-    color: #d60101;
-
-
-}
-
-.event-date {
-    margin-top: 10px;
-    color: #333;
-
-}
-
-
-.like-button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-}
-
-.like-button:hover {
-    background-color: #218838;
-    /* Dark green on hover */
-}
-
-.like-button.liked {
-    background-color: #dc3545;
-    /* Red background when liked */
-}
-
-/* Show more link styling */
-.event-card a {
-    color: #007bff;
-    /* Blue link */
-    text-decoration: none;
-    cursor: pointer;
-    display: block;
-    margin-top: 10px;
-}
-
-.event-card a:hover {
-    text-decoration: underline;
-    /* Underline on hover */
-}
-
-/* Expanded event card styling */
-.event-card.expanded {
-    grid-column: span 2;
-    /* Span 2 columns when expanded */
-}
-
-/* Event photo styling */
-.event-photo {
-    width: 100%;
-    height: 200px;
-    /* Adjust height as needed */
-    object-fit: cover;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-}
-
-.event-photo.expanded-photo {
-    height: 300px;
-    /* Adjust height when expanded */
-    object-fit: contain;
-}
-
-/* Ticket count input styling */
-.ticket-count-input {
-    width: 60px;
-    padding: 5px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    /* Light gray border */
-    border-radius: 5px;
-}
-
-.ticket-count-input:focus {
-    outline: none;
-    border-color: #007bff;
-    /* Blue border when focused */
-}
-
-/* Buy ticket button styling */
-.buy-ticket-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: -30px;
-    transition: background-color 0.3s ease;
-    margin-left: 260px;
-}
-
-.buy-ticket-button:hover {
-    background-color: #0056b3;
-
-}
-
-/* No events message styling */
-.no-events-message {
-    grid-column: span 4;
-    text-align: center;
-    color: #333;
-    /* Dark gray text */
-}
-
-/* Summary card overlay styling */
-.summary-card-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Semi-transparent black overlay */
+.event-actions {
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Summary card styling */
-.summary-card {
-    background-color: #e0717163;
-    /* White background */
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Phone input styling */
-.phone-input {
-    width: 100%;
-    padding: 10px;
+    justify-content: space-between;
     margin-top: 10px;
-    border: 1px solid #ccc;
-    /* Light gray border */
-    border-radius: 5px;
 }
 
-.phone-input:focus {
-    outline: none;
-    border-color: #007bff;
-    /* Blue border when focused */
-}
-
-.payment-button,
-.cancel-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
+.like-bookmark button {
+    background-color: transparent;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
 }
 
-.payment-button:hover,
-.cancel-button:hover {
-    background-color: #0056b3;
+.admin-actions button {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 4px;
 }
 
-.events-grid {
-    height: 1px !important;
-}
-
-.ticket-count-input {
-    margin-top: 30px;
+.admin-actions button:hover {
+    background-color: orange;
 }

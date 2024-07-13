@@ -1,19 +1,25 @@
-/* Login.css */
-
 .Login {
-    max-width: 350px;
-    margin: 0 auto;
+    margin-top: 250px;
+    margin-left: 300px;
+    margin-right: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 20px;
-    border: 1px solid #ccc;
     border-radius: 8px;
-    background-color: #bdbbbb;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 20px yellow;
+    text-align: center;
+}
+
+.Login:hover {
+    filter: drop-shadow(2px 2px 20px blue);
+    box-shadow: 2px 2px 20px blue;
 }
 
 .Login h2 {
     text-align: center;
-    margin-bottom: 20px;
-    color: #333333;
+    color: yellow;
 }
 
 .Login form {
@@ -22,17 +28,23 @@
 }
 
 .Login label {
-    margin-bottom: 10px;
-    color: #555555;
+    color: white;
+    margin: 0 auto;
+    margin-bottom: -20px;
+}
+
+.Login input[type='email'] {
+    padding: 10px;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    font-size: 16px;
 }
 
 .Login input[type="text"],
 .Login input[type="password"] {
-    width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
     border: 1px solid #dddddd;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 16px;
 }
 
@@ -57,6 +69,7 @@
     position: relative;
     display: flex;
     align-items: center;
+    color: white;
 }
 
 .Login input[type="password"]+span,
