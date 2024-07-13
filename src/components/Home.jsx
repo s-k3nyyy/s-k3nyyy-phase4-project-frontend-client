@@ -39,9 +39,6 @@ function Home({ onLogout }) {
                         <li><NavLink to="/bookmark" activeClassName="active-link">Bookmarks</NavLink></li>
                         <li><NavLink to="/explore" activeClassName="active-link">Explore Events</NavLink></li>
                         <li><NavLink to="/reviews" activeClassName="active-link">Reviews</NavLink></li>
-                        {isAdmin && (
-                            <li><NavLink to="/admin" activeClassName="active-link">Admin</NavLink></li>
-                        )}
                         <li><a href="#" onClick={handleLogout}>Logout</a></li>
                     </ul>
                 </nav>

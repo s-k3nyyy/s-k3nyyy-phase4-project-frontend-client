@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import RegisterForm from './components/RegisterForm';
@@ -7,37 +7,44 @@ import AdminDashboard from './components/AdminDashboard';
 import AdminLogin from './components/AdminLogin';
 import ExploreEvents from './components/ExploreEvents';
 import Bookmark from './components/Bookmark';
-import Reviews from './components/Reviews'; // Import Reviews component
+import Reviews from './components/Reviews';
 import './App.css';
 
 function App() {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
 
+  // Function to handle admin login
   const handleAdminLogin = () => {
     setIsAdminAuthenticated(true);
   };
 
+  // Function to handle user login
   const handleUserLogin = () => {
     setIsUserAuthenticated(true);
   };
 
+  // Function to handle logout for both user and admin
   const handleLogout = () => {
     setIsAdminAuthenticated(false);
     setIsUserAuthenticated(false);
-    localStorage.removeItem('admin_token'); // Clear admin JWT token from localStorage
-    // Optionally clear user JWT token as well if needed
+    localStorage.removeItem('access_token'); // Remove user access token
+    localStorage.removeItem('admin_token'); // Remove admin token
   };
 
+  // Function to handle admin logout
   const handleAdminLogout = () => {
     setIsAdminAuthenticated(false);
-    localStorage.removeItem('admin_token'); // Clear admin JWT token from localStorage
+    localStorage.removeItem('admin_token'); // Remove admin token from localStorage
   };
 
-  const handleRegister = () => {
-    // Handle registration success or any other actions as needed
-    setIsUserAuthenticated(true);
-  };
+  // useEffect to check if user is logged in and refresh token if necessary
+  useEffect(() => {
+    const accessToken = localStorage.getItem('access_token');
+    if (accessToken) {
+      refreshToken(); // Call refreshToken function if access token is present
+    }
+  }, []);
 
   return (
     <Router>
@@ -46,22 +53,22 @@ function App() {
           <Routes>
             <Route path="/" element={<Navigate to={isUserAuthenticated ? '/home' : '/login'} />} />
             <Route path="/login" element={<Login onLogin={handleUserLogin} />} />
-            <Route path="/register" element={<RegisterForm onRegister={handleRegister} />} />
+            <Route path="/register" element={<RegisterForm onRegister={handleUserLogin} />} />
 
             {/* Conditionally render Home or redirect to /login */}
             {isUserAuthenticated ? (
               <>
                 <Route path="/home" element={<Home onLogout={handleLogout} />} />
                 <Route path="/explore" element={<ExploreEvents />} />
-                <Route path="/bookmark" element={<Bookmark />} /> {/* Add Bookmark route */}
-                <Route path="/reviews" element={<Reviews />} /> {/* Add Reviews route */}
+                <Route path="/bookmark" element={<Bookmark />} />
+                <Route path="/reviews" element={<Reviews />} />
               </>
             ) : (
               <>
                 <Route path="/home" element={<Navigate to="/login" />} />
                 <Route path="/explore" element={<Navigate to="/login" />} />
-                <Route path="/bookmark" element={<Navigate to="/login" />} /> {/* Redirect to login if not authenticated */}
-                <Route path="/reviews" element={<Navigate to="/login" />} /> {/* Redirect to login if not authenticated */}
+                <Route path="/bookmark" element={<Navigate to="/login" />} />
+                <Route path="/reviews" element={<Navigate to="/login" />} />
               </>
             )}
 

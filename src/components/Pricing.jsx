@@ -1,6 +1,6 @@
 // Pricing.jsx
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useLocation, useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 
 function Pricing() {
@@ -25,8 +25,8 @@ function Pricing() {
       } catch (error) {
         console.error('Error fetching event:', error);
         setLoading(false);
-        // Redirect to ExploreEvents or show an error message as needed
-        navigate('/pricing'); // Use navigate to redirect
+        
+        navigate('/pricing')
       }
     };
 
@@ -48,11 +48,9 @@ function Pricing() {
   };
 
   const handleBuyTicket = () => {
-    // Implement logic for purchasing tickets
-    // This could involve sending a request to your backend to initiate payment
-    if (!event) return; // Handle case where event is null
+   
+    if (!event) return; 
     console.log(`Buying ${ticketCount} tickets for event ${event.id} via ${paymentMethod}.`);
-    // Redirect or handle success message after purchase
   };
 
   if (loading) {
@@ -82,7 +80,6 @@ function Pricing() {
         <label>Select Payment Method:</label>
         <select value={paymentMethod} onChange={(e) => handlePaymentMethodChange(e.target.value)}>
           <option value="mpesa">M-Pesa</option>
-          {/* Add more payment methods here */}
         </select>
       </div>
       <p>Total Amount: ksh {calculateTotalAmount()}</p>
