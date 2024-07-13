@@ -6,7 +6,8 @@ import Home from './components/Home';
 import AdminDashboard from './components/AdminDashboard';
 import AdminLogin from './components/AdminLogin';
 import ExploreEvents from './components/ExploreEvents';
-import Bookmark from './components/Bookmark'; // Import Bookmark component
+import Bookmark from './components/Bookmark';
+import Reviews from './components/Reviews'; // Import Reviews component
 import './App.css';
 
 function App() {
@@ -53,12 +54,14 @@ function App() {
                 <Route path="/home" element={<Home onLogout={handleLogout} />} />
                 <Route path="/explore" element={<ExploreEvents />} />
                 <Route path="/bookmark" element={<Bookmark />} /> {/* Add Bookmark route */}
+                <Route path="/reviews" element={<Reviews />} /> {/* Add Reviews route */}
               </>
             ) : (
               <>
                 <Route path="/home" element={<Navigate to="/login" />} />
                 <Route path="/explore" element={<Navigate to="/login" />} />
                 <Route path="/bookmark" element={<Navigate to="/login" />} /> {/* Redirect to login if not authenticated */}
+                <Route path="/reviews" element={<Navigate to="/login" />} /> {/* Redirect to login if not authenticated */}
               </>
             )}
 

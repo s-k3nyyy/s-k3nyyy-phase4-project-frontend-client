@@ -11,7 +11,6 @@ function Home({ onLogout }) {
 
     useEffect(() => {
         if (accessToken && refreshToken) {
-            // Set the tokens in local storage
             localStorage.setItem('access_token', accessToken);
             localStorage.setItem('refresh_token', refreshToken);
         }
@@ -23,7 +22,6 @@ function Home({ onLogout }) {
     }, []);
 
     const handleLogout = () => {
-        // Remove the tokens from local storage
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         onLogout();
@@ -38,12 +36,12 @@ function Home({ onLogout }) {
                     </h1>
                     <ul className="nav-links">
                         <li><NavLink exact to="/home" activeClassName="active-link">Home</NavLink></li>
-                        {/* <li><NavLink to="/pricing" activeClassName="active-link">Pricing</NavLink></li> */}
                         <li><NavLink to="/bookmark" activeClassName="active-link">Bookmarks</NavLink></li>
                         <li><NavLink to="/explore" activeClassName="active-link">Explore Events</NavLink></li>
-                     {/*    {isAdmin && (
+                        <li><NavLink to="/reviews" activeClassName="active-link">Reviews</NavLink></li>
+                        {isAdmin && (
                             <li><NavLink to="/admin" activeClassName="active-link">Admin</NavLink></li>
-                        )} */}
+                        )}
                         <li><a href="#" onClick={handleLogout}>Logout</a></li>
                     </ul>
                 </nav>
