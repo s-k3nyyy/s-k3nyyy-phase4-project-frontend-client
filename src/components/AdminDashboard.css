@@ -5,14 +5,14 @@
     /* Adjust the max-width as needed */
     margin: auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #aa898969;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .admin-dashboard-header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .admin-dashboard-header h2,
@@ -197,4 +197,68 @@
 .admin-dashboard ul li img {
     max-width: 100%;
     height: auto;
+}
+
+.listing {
+    color: black;
+}
+
+.admin-dashboard-container {
+    margin-top: 700px;
+}
+
+.users-list-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f0f0f000;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for Users List Heading */
+.users-list-section h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.user-card {
+    flex: 1 1 calc(25% - 20px);
+    background-color: #ffffff3d;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-card h4 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.user-card p {
+    margin-bottom: 5px;
+}
+
+.user-card button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.user-card button:hover {
+    background-color: #0056b3;
+}
+
+.users-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
