@@ -1,0 +1,71 @@
+.review-edit-btn {
+    background-color: blue;
+    margin: 20px;
+    padding: 6px;
+    border-radius: 4px;
+}
+
+.review-edit-btn:hover {
+    filter: drop-shadow(2px 2px 20px orange);
+    box-shadow: 2px 2px 20px yellow;
+}
+
+.delete-review-btn {
+    background-color: green;
+    margin: 10px;
+    padding: 6px;
+    border-radius: 4px;
+}
+
+.delete-review-btn:hover {
+    filter: drop-shadow(2px 2px 20px yellow);
+    box-shadow: 2px 2px 20px blue;
+}
+
+.list-review {
+    color: white;
+}
+
+.review-btn {
+    background-color: blue;
+    margin: 10px;
+    align-items: center;
+    padding: 6px;
+    border-radius: 4px;
+    color: white;
+}
+
+.review-btn:hover {
+    box-shadow: 2px 2px 20px yellow;
+    background-color: green;
+}
+
+.div-element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+
+}
+
+.div-element label {
+    display: block;
+    font-size: 16px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.div-element input[type="text"] {
+    width: calc(60% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.div-element input[type="number"] {
+    width: calc(10% - 20px);
+    border-radius: 4px;
+    padding: 2px;
+
+}
