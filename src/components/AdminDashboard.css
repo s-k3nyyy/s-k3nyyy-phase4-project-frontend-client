@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     max-width: 1000px;
-    /* Adjust the max-width as needed */
     margin: auto;
     padding: 20px;
     background-color: #aa898969;
@@ -86,7 +85,7 @@
     flex-direction: column;
     margin-bottom: 20px;
     padding: 10px;
-    background-color: #fff;
+    background-color: #ffffff7a;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -101,7 +100,7 @@
 }
 
 .event-photo {
-    max-width: 100%;
+    max-width: 100px;
     height: auto;
     margin-bottom: 10px;
 }
@@ -204,7 +203,7 @@
 }
 
 .admin-dashboard-container {
-    margin-top: 700px;
+    margin-top: 100px;
 }
 
 .users-list-section {

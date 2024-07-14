@@ -107,6 +107,9 @@ function ExploreEvents() {
     <div className="explore-events-container">
       <div className={summary ? 'blur-background' : ''}>
         <h1 className="explore-events-title">Explore Events</h1>
+        <p className="explore-events-description">
+          Welcome to our events page! Discover exciting events happening near you. Search by title or price range to find your perfect event.
+        </p>
         <input
           type="text"
           placeholder="Search events by title..."
