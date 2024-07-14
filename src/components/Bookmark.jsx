@@ -255,7 +255,7 @@ const Bookmark = () => {
       <h2>Event Bookmarks</h2>
       {isAdmin && (
         <div className="create-event-bookmark mb-4">
-          <h3>Create Event Bookmark</h3>
+          <h3 className="h3-bookmark">Create Event Bookmark</h3>
           <div className="row">
             <div className="col">
               <input

@@ -10,8 +10,11 @@ function Home() {
       <NavBar />
       <div>
         <ExploreEvents />
-        Your gateway to unforgettable moments. Secure your tickets effortlessly,
-        and make every event memorable.
+        <p style={{ color: "gold" }}>
+          {" "}
+          Your gateway to unforgettable moments. Secure your tickets
+          effortlessly, and make every event memorable.
+        </p>
       </div>
       <Footer />
     </div>
