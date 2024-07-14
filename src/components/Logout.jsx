@@ -21,7 +21,7 @@ function Logout() {
 
       if (response.ok) {
         localStorage.removeItem("token");
-        navigate("/login");
+        navigate("/");
       } else {
         console.error("Logout failed:", response.statusText);
       }
@@ -31,7 +31,14 @@ function Logout() {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
       <button
         onClick={handleLogout}
         style={{

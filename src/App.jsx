@@ -7,6 +7,7 @@ import Tickets from "./components/Tickets";
 import Bookmark from "./components/Bookmark";
 import ExploreEvents from "./components/ExploreEvents";
 import Payments from "./components/Payments";
+import Reviews from "./components/Reviews";
 import Logout from "./components/Logout";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="home/bookmark" element={<Bookmark />} />
           <Route path="home/events" element={<ExploreEvents />} />
           <Route path="home/payments" element={<Payments />} />
+          <Route path="home/reviews" element={<Reviews />} />
           <Route path="/home/logout" element={<Logout />} />
         </Routes>
       </Router>
