@@ -16,14 +16,14 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="register" element={<RegisterForm />} />
+          <Route path="home" element={<Home />} />
           <Route path="home/tickets" element={<Tickets />} />
           <Route path="home/bookmark" element={<Bookmark />} />
           <Route path="home/events" element={<ExploreEvents />} />
           <Route path="home/payments" element={<Payments />} />
           <Route path="home/reviews" element={<Reviews />} />
-          <Route path="/home/logout" element={<Logout />} />
+          <Route path="home/logout" element={<Logout />} />
         </Routes>
       </Router>
     </div>

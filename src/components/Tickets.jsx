@@ -32,8 +32,13 @@ function Tickets() {
   };
 
   const fetchEvents = async () => {
+    const token = localStorage.getItem("token");
     try {
-      const response = await axios.get("http://127.0.0.1:5555/events");
+      const response = await axios.get("http://127.0.0.1:5555/events", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setEvents(response.data);
     } catch (error) {
       console.error("Error fetching events", error);
@@ -105,6 +110,90 @@ function Tickets() {
       setTickets(filteredTickets);
     } catch (error) {
       console.error("Error deleting ticket", error);
+    }
+  };
+
+  const buyTicket = async (ticketId) => {
+    try {
+      const userId = prompt("Enter your user ID:");
+      if (!userId) {
+        alert("User ID is required.");
+        return;
+      }
+      const userExists = await validateInput("users", userId);
+      if (!userExists) {
+        alert(`User with ID ${userId} does not exist.`);
+        return;
+      }
+
+      const enteredPrice = prompt("Enter the price for this ticket:");
+      if (!enteredPrice) {
+        alert("Price is required.");
+        return;
+      }
+
+      const status = prompt(
+        "Enter the status for this transaction (e.g., pending, completed):"
+      );
+      if (!status) {
+        alert("Status is required.");
+        return;
+      }
+
+      const eventId = prompt(
+        "Enter the event ID for which you are buying the ticket:"
+      );
+      if (!eventId) {
+        alert("Event ID is required.");
+        return;
+      }
+      const eventExists = await validateInput("events", eventId);
+      if (!eventExists) {
+        alert(`Event with ID ${eventId} does not exist.`);
+        return;
+      }
+
+      const ticketExists = await validateInput("tickets", ticketId);
+      if (!ticketExists) {
+        alert(`Ticket with ID ${ticketId} does not exist.`);
+        return;
+      }
+
+      alert("Your request has been received.");
+
+      await axios.post(`http://127.0.0.1:5555/buy-ticket/${ticketId}`, {
+        ticket_id: ticketId,
+        user_id: userId,
+        status: status,
+        price: enteredPrice,
+        event_id: eventId,
+      });
+
+      alert("Ticket purchased successfully.");
+    } catch (error) {
+      console.error("Error purchasing ticket:", error);
+      alert("Failed to purchase ticket. Please try again later.");
+    }
+  };
+
+  const validateInput = async (entity, id) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:5555/${entity}/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return !!response.data;
+    } catch (error) {
+      console.error(
+        `Error checking existence of ${entity} with ID ${id}:`,
+        error
+      );
+      return false;
     }
   };
 
@@ -218,6 +307,9 @@ function Tickets() {
                     Delete
                   </button>
                 </>
+              )}
+              {!isAdmin && (
+                <button onClick={() => buyTicket(ticket.id)}>Buy Ticket</button>
               )}
             </div>
           );
