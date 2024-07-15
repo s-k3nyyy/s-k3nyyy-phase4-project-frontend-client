@@ -29,6 +29,7 @@ const Login = () => {
         if (data.token) {
           localStorage.setItem("token", data.token);
           localStorage.setItem("refresh_token", data.refresh_token);
+          localStorage.setItem("user_id", data.user_id); // Store user ID
           alert("Login successful!");
           resetForm();
           navigate("/home");
@@ -54,7 +55,7 @@ const Login = () => {
           type="email"
           onChange={formik.handleChange}
           value={formik.values.email}
-        />{" "}
+        />
         <br />
         {formik.touched.email && formik.errors.email ? (
           <p className="error-message">{formik.errors.email}</p>
@@ -67,7 +68,7 @@ const Login = () => {
           type="password"
           onChange={formik.handleChange}
           value={formik.values.password}
-        />{" "}
+        />
         <br />
         {formik.touched.password && formik.errors.password ? (
           <p className="error-message">{formik.errors.password}</p>

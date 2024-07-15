@@ -6,9 +6,11 @@ function Reviews() {
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const [reviews, setReviews] = useState([]);
+  const [users, setUsers] = useState({});
 
   useEffect(() => {
     fetchReviews();
+    fetchUsers();
   }, []);
 
   const fetchReviews = async () => {
@@ -17,6 +19,19 @@ function Reviews() {
       setReviews(response.data);
     } catch (error) {
       console.error("Error fetching reviews:", error);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:5555/users");
+      const usersData = response.data.reduce((acc, user) => {
+        acc[user.id] = user.username;
+        return acc;
+      }, {});
+      setUsers(usersData);
+    } catch (error) {
+      console.error("Error fetching users:", error);
     }
   };
 
@@ -35,7 +50,7 @@ function Reviews() {
         const response = await axios.post("http://127.0.0.1:5555/reviews", {
           text: reviewText,
           rating: rating,
-          user_id: 1,
+          user_id: 6,
         });
         setReviews([...reviews, response.data]);
         setReviewText("");
@@ -91,8 +106,12 @@ function Reviews() {
           reviews.map((review, index) => (
             <div key={index} className="review-item">
               <div className="review-header">
-                <span className="reviewer-name">{review.username}</span>
-                <span className="review-date">{review.date}</span>
+                <span className="reviewer-name">
+                  {users[review.user_id] || "Unknown User"}
+                </span>
+                <span className="review-date">
+                  {new Date(review.created_at).toLocaleString()}
+                </span>
               </div>
               <p className="review-body">{review.text}</p>
               <p>Rating: {review.rating}</p>
