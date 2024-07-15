@@ -12,12 +12,10 @@ function ExploreEvents() {
     organizer_id: "",
   });
   const [isAdmin, setIsAdmin] = useState(false);
-  const [likedEvents, setLikedEvents] = useState([]);
 
   useEffect(() => {
     fetchEvents();
     checkAdminStatus();
-    fetchLikedEvents();
   }, []);
 
   const checkAdminStatus = () => {
@@ -54,27 +52,6 @@ function ExploreEvents() {
       })
       .catch((error) => {
         console.error("Error fetching events:", error);
-      });
-  };
-
-  const fetchLikedEvents = () => {
-    const token = localStorage.getItem("token");
-    fetch("http://127.0.0.1:5555/liked-events", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          console.error("Fetch liked events failed:", response.statusText);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setLikedEvents(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching liked events:", error);
       });
   };
 
@@ -167,46 +144,58 @@ function ExploreEvents() {
   };
 
   const handleLike = (eventId) => {
-    const token = localStorage.getItem("token");
-    const isLiked = likedEvents.some((event) => event.id === eventId);
+    const userId = localStorage.getItem("user_id");
 
-    if (isLiked) {
-      fetch(`http://127.0.0.1:5555/events/${eventId}/unlike`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => {
-          if (response.ok) {
-            fetchEvents();
-            fetchLikedEvents();
-          }
-        })
-        .catch((error) => {
-          console.error("Error unliking event:", error);
-        });
-    } else {
-      fetch(`http://127.0.0.1:5555/events/${eventId}/like`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => {
-          if (response.ok) {
-            fetchEvents();
-            fetchLikedEvents();
-          }
-        })
-        .catch((error) => {
-          console.error("Error liking event:", error);
-        });
+    if (!userId) {
+      console.error("No user ID found in local storage.");
+      return;
     }
-  };
 
-  const isEventLiked = (eventId) => {
-    return likedEvents.some((event) => event.id === eventId);
+    const eventToUpdate = events.find((event) => event.id === eventId);
+
+    if (!eventToUpdate) {
+      console.error(`Event with ID ${eventId} not found in local state.`);
+      return;
+    }
+
+    const isLiked = eventToUpdate.liked;
+    const url = `http://127.0.0.1:5555/events/${eventId}/like`;
+    const method = isLiked ? "DELETE" : "POST";
+
+    fetch(url, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+        user_id: userId,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          return response.json().then((data) => {
+            throw new Error(
+              data.message || `Failed to ${isLiked ? "unlike" : "like"} event`
+            );
+          });
+        }
+      })
+      .then((data) => {
+        console.log("Like/unlike successful:", data);
+        setEvents((prevEvents) =>
+          prevEvents.map((event) =>
+            event.id === eventId ? { ...event, liked: !isLiked } : event
+          )
+        );
+      })
+      .catch((error) => {
+        console.error(`Error ${isLiked ? "unliking" : "liking"} event:`, error);
+        alert(
+          `Failed to ${
+            isLiked ? "unlike" : "like"
+          } event. Please try again later.`
+        );
+      });
   };
 
   return (
@@ -341,10 +330,7 @@ function ExploreEvents() {
                     {!isAdmin && (
                       <div className="like-bookmark">
                         <button onClick={() => handleLike(event.id)}>
-                          <span role="img" aria-label="heart">
-                            {isEventLiked(event.id) ? "❤️" : "🤍"}
-                          </span>{" "}
-                          {event.likes}
+                          {event.liked ? "❤️" : "🤍"}
                         </button>
                         <button>Bookmark</button>
                       </div>
