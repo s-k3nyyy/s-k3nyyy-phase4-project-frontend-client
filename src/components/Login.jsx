@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import './Login.css';
 
 const Login = ({ onLogin }) => {
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -18,7 +21,7 @@ const Login = ({ onLogin }) => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/login', userData);
+      const response = await axios.post('http://127.0.0.1:5000/login', userData);
       console.log(response.data);
       setMessage('Login successful');
       onLogin();
@@ -33,9 +36,13 @@ const Login = ({ onLogin }) => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
-    <div className="foorm-container">
-      <p className="ttitle">Welcome back</p>
+    <div className="form-container">
+      <p className="title">Welcome back</p>
       {message && <p className="message">{message}</p>}
       <form className="form" onSubmit={handleSubmit}>
         <input
@@ -46,14 +53,21 @@ const Login = ({ onLogin }) => {
           onChange={(e) => setUsernameOrEmail(e.target.value)}
           required
         />
-        <input
-          type="password"
-          className="input"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <div className="password-container">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            className="input"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <FontAwesomeIcon
+            icon={showPassword ? faEyeSlash : faEye}
+            onClick={togglePasswordVisibility}
+            className="password-icon"
+          />
+        </div>
         <button type="submit" className="form-btn">Log in</button>
       </form>
       <p className="sign-up-label">
@@ -62,9 +76,9 @@ const Login = ({ onLogin }) => {
           Sign up
         </Link>
       </p>
-      <div className='aadmin'>
-            Are you an admin? <Link className="sign-up-link" to="/admin/login">Login here</Link>
-          </div>
+      <div className='admin'>
+        Are you an admin? <Link className="sign-up-link" to="/admin/login">Login here</Link>
+      </div>
       <div className="buttons-container">
         <div className="apple-login-button">
           <svg

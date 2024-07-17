@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import './ExploreEvents.css';
+import Bookmark from './Bookmark'; // Import Bookmark component
 
 function ExploreEvents() {
   const [events, setEvents] = useState([]);
@@ -13,7 +13,6 @@ function ExploreEvents() {
   const [ticketCounts, setTicketCounts] = useState({});
   const [phoneNumber, setPhoneNumber] = useState('');
   const [summary, setSummary] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -40,7 +39,7 @@ function ExploreEvents() {
   const toggleLike = (eventId) => {
     setLikedEvents((prevLikedEvents) => {
       if (prevLikedEvents.includes(eventId)) {
-        return prevLikedEvents.filter(id => id !== eventId);
+        return prevLikedEvents.filter((id) => id !== eventId);
       } else {
         return [...prevLikedEvents, eventId];
       }
@@ -79,7 +78,7 @@ function ExploreEvents() {
         eventId,
         title: event.title,
         ticketCount,
-        totalAmount
+        totalAmount,
       });
     } else {
       alert('Please enter a valid number of tickets (1-5).');
@@ -97,10 +96,11 @@ function ExploreEvents() {
     setPhoneNumber('');
   };
 
-  const filteredEvents = events.filter((event) =>
-    event.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    (!minPrice || event.ticket_price >= parseInt(minPrice, 10)) &&
-    (!maxPrice || event.ticket_price <= parseInt(maxPrice, 10))
+  const filteredEvents = events.filter(
+    (event) =>
+      event.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (!minPrice || event.ticket_price >= parseInt(minPrice, 10)) &&
+      (!maxPrice || event.ticket_price <= parseInt(maxPrice, 10))
   );
 
   return (
@@ -108,7 +108,8 @@ function ExploreEvents() {
       <div className={summary ? 'blur-background' : ''}>
         <h1 className="explore-events-title">Explore Events</h1>
         <p className="explore-events-description">
-          Welcome to our events page! Discover exciting events happening near you. Search by title or price range to find your perfect event.
+          Welcome to our events page! Discover exciting events happening near you. Search by title or price range to find
+          your perfect event.
         </p>
         <input
           type="text"
@@ -209,6 +210,9 @@ function ExploreEvents() {
           </div>
         </div>
       )}
+
+      {/* Render Bookmark component and pass likedEvents */}
+      <Bookmark likedEvents={likedEvents} />
     </div>
   );
 }

@@ -92,16 +92,16 @@ function AdminDashboard() {
             setMessage('Error deleting users. Please try again.');
         }
     }
-    const handleDeleteEvent = async (eventId) => {
-        try {
-            const response = await api.delete(`/event/delete/${eventId}`);
-            console.log('Event deleted:', response.data);
-            fetchEvents();
-        } catch (error) {
-            console.error('Error deleting event:', error);
-            setMessage('Error deleting event. Please try again.');
-        }
-    };
+ const handleDeleteEvent = async (eventId) => {
+    try {
+        const response = await api.delete(`/event/${eventId}/delete`);
+        console.log('Event deleted:', response.data);
+        fetchEvents();
+    } catch (error) {
+        console.error('Error deleting event:', error);
+        setMessage('Error deleting event. Please try again.');
+    }
+};
 
     const handleViewMoreClick = async (eventId) => {
         try {

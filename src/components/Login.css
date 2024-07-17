@@ -1,145 +1,106 @@
-.foorm-container {
-    width: 350px;
-    height: 520px;
-    background-color: #dbd3d370;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    border-radius: 10px;
-    box-sizing: border-box;
-    margin-left: 450px;
-    padding: 20px 30px;
-    margin-top: 30px;
+/* Login.css */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
 }
 
-.ttitle {
-    text-align: center;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-    margin: 10px 0 30px 0;
-    font-size: 28px;
-    font-weight: 800;
-    color: #a7a2a2;
+.title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.message {
+    margin-bottom: 20px;
+    color: red;
 }
 
 .form {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    margin-bottom: 15px;
+    width: 300px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .input {
-    border-radius: 20px;
-    border: 1px solid #c0c0c0;
-    outline: 0 !important;
-    box-sizing: border-box;
-    padding: 12px 15px;
-}
-
-.page-link {
-    text-decoration: underline;
-    margin: 0;
-    text-align: end;
-    color: #747474;
-    text-decoration-color: #747474;
-}
-
-.page-link-label {
-    cursor: pointer;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-    font-size: 9px;
-    font-weight: 700;
-}
-
-.page-link-label:hover {
-    color: #000;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .form-btn {
-    padding: 10px 15px;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-    border-radius: 20px;
-    border: 0 !important;
-    outline: 0 !important;
-    background: teal;
+    padding: 10px;
+    background-color: #007bff;
     color: white;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-bottom: 10px;
 }
 
-.form-btn:active {
-    box-shadow: none;
+.form-btn:hover {
+    background-color: #0056b3;
 }
 
 .sign-up-label {
-    margin: 0;
-    font-size: 25px;
-    color: #cec4c4;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    margin-top: 10px;
 }
 
 .sign-up-link {
-    margin-left: 1px;
-    font-size: 11px;
+    color: #007bff;
+}
+
+.sign-up-link:hover {
     text-decoration: underline;
-    text-decoration-color: teal;
-    color: teal;
-    cursor: pointer;
-    font-weight: 800;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.admin {
+    margin-top: 10px;
 }
 
 .buttons-container {
-    width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
+    gap: 10px;
     margin-top: 20px;
-    gap: 15px;
 }
 
 .apple-login-button,
 .google-login-button {
-    border-radius: 20px;
-    box-sizing: border-box;
-    padding: 10px 15px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
-        rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-    cursor: pointer;
     display: flex;
-    justify-content: center;
     align-items: center;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-    font-size: 11px;
-    gap: 5px;
-}
-
-.apple-login-button {
-    background-color: #000;
-    color: #fff;
-    border: 2px solid #000;
-}
-
-.google-login-button {
-    border: 2px solid #747474;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: white;
+    color: #333;
+    width: 150px;
 }
 
 .apple-icon,
 .google-icon {
-    font-size: 18px;
-    margin-bottom: 1px;
+    margin-right: 10px;
 }
 
-.aadmin {
-    color: rgb(160, 159, 159);
-    font-size: 20px;
+.password-container {
+    position: relative;
 }
 
-.sign-up-link {
-    font-size: 20px;
+.password-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
 }

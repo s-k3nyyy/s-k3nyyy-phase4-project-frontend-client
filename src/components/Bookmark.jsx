@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 import './Bookmark.css';
 
 function Bookmark() {
@@ -27,6 +29,10 @@ function Bookmark() {
 
     return (
         <div className="bookmarked-events-container">
+            <NavLink exact to="/home" activeClassName="active-link" className="home-icon">
+                <span className="material-symbols-outlined">home</span>
+            </NavLink>
+
             <h2 className="bookmarked-events-title">Bookmarked Events</h2>
             <div className="events-grid">
                 {bookmarkedEvents.map((event) => (

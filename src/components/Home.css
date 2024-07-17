@@ -4,9 +4,7 @@ body {
     font-family: Arial, sans-serif;
     position: relative;
     background-color: #f5f5f5;
-    /* Light mode background color */
     color: #c0bdbd;
-    /* Default text color in light mode */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -32,7 +30,6 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
     color: white;
-    /* Light mode header text color */
 }
 
 .head nav {
@@ -76,7 +73,6 @@ body {
 .nav-links li a {
     text-decoration: none;
     color: #999090;
-    /* Default link text color in light mode */
     font-weight: bold;
     padding: 10px 15px;
     border-radius: 5px;
@@ -85,9 +81,7 @@ body {
 
 .nav-links li a:hover {
     background-color: #ddd;
-    /* Hover background color in light mode */
     color: #ccac00;
-    /* Hover text color in light mode */
 }
 
 /* Event ticketing message */
@@ -101,37 +95,29 @@ body {
     margin-top: 50px;
     text-align: center;
     color: #d8d6d6;
-    /* Default text color in light mode */
 }
 
 /* Dark mode styles */
 body.dark-mode {
     background-color: #222;
-    /* Dark mode background color */
     color: #b8b0b0;
-    /* Default text color in dark mode */
 }
 
 .head.dark-mode {
     background-color: #333;
-    /* Dark mode header background color */
 }
 
 .nav-links.dark-mode li a {
     color: #ccc;
-    /* Default link text color in dark mode */
 }
 
 .nav-links.dark-mode li a:hover {
     background-color: #444;
-    /* Hover background color in dark mode */
     color: #ccac00;
-    /* Hover text color in dark mode */
 }
 
 .event-ticketing.dark-mode {
     color: #ccc;
-    /* Text color in event ticketing message in dark mode */
 }
 
 /* Additional styles for specific components */
@@ -142,7 +128,6 @@ body.dark-mode {
 /* Example event card */
 .event-card {
     background-color: #fff;
-    /* Event card background color */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 15px;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -165,7 +150,6 @@ body.dark-mode {
 .event-price,
 .event-date {
     color: inherit;
-    /* Inherit text color */
 }
 
 .event-title {
@@ -199,11 +183,6 @@ body.dark-mode {
 .event-card.dark-mode:hover {
     transform: translateY(-10px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-}
-
-body.dark-mode {
-    background-color: #121212;
-    color: #ffffff;
 }
 
 .home-page {
@@ -349,13 +328,111 @@ body.dark-mode {
     color: #666;
 }
 
-@media (max-width: 768px) {
-    .features .feature-item {
-        flex: 1 1 100%;
+@media (max-width: 1024px) {
+    .nav-links li {
+        font-size: 16px;
+        margin-left: 15px;
+    }
+
+    .event-ticketing {
+        font-size: 18px;
+        width: 80%;
     }
 }
 
-.about p {
-    font-size: 1.2em;
-    line-height: 1.5;
+@media (max-width: 768px) {
+    .head {
+        padding: 15px;
+    }
+
+    .logo {
+        font-size: 1.8em;
+    }
+
+    .site-name {
+        font-size: 1.8em;
+    }
+
+    .site-tagline {
+        font-size: 0.4em;
+    }
+
+    .nav-links li {
+        margin: 0 8px;
+        font-size: 14px;
+    }
+
+    .event-ticketing {
+        font-size: 16px;
+    }
+
+    .features .feature-item {
+        flex: 1 1 45%;
+        margin: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .head {
+        padding: 10px;
+    }
+
+    .logo {
+        font-size: 1.5em;
+    }
+
+    .site-name {
+        font-size: 1.5em;
+    }
+
+    .site-tagline {
+        font-size: 0.3em;
+    }
+
+    .nav-links li {
+        margin: 0 5px;
+        font-size: 12px;
+    }
+
+    .event-ticketing {
+        font-size: 14px;
+    }
+
+    .features .feature-item {
+        flex: 1 1 100%;
+        margin: 5px;
+    }
+}
+
+/* Existing CSS styles */
+
+/* Mobile-first approach for responsive design */
+@media (max-width: 768px) {
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        background-color: #ff6600bd;
+        border-radius: 5px;
+        margin-top: 10px;
+        color: white;
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-links a,
+    .nav-links button {
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .nav-links .icon-label {
+        display: none;
+    }
 }
