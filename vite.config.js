@@ -1,12 +1,15 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+// Replace 'repository-name' with the actual name of your repository
+const basePath = '/repository-name/';
+
 export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      input: 'index.html',
+      input: 'index.html', // Ensure this path is correct
     },
   },
-  base: '/<https://github.com/s-k3nyyy/s-k3nyyy-phase4-project-frontend-client.github.io.git>/', 
+  base: basePath,
 });
