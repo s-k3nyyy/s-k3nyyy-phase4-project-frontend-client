@@ -21,7 +21,7 @@ const Login = ({ onLogin }) => {
     };
 
     try {
-      const response = await axios.post('https://phase4-project-backend-server-2.onrender.com /login', userData);
+      const response = await axios.post('https://phase4-project-backend-server-2.onrender.com/login', userData);
       console.log(response.data);
       setMessage('Login successful');
       onLogin();
