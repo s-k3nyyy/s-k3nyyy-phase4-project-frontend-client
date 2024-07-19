@@ -13,16 +13,16 @@ function Reviews() {
     useEffect(() => {
         // Placeholder reviews for an event management and ticketing website
         const placeholderReviews = [
-            { text: "Amazing event! Had a great time.", rating: 5, username: 'edwin', date: '2024-07-01' },
-            { text: "Well organized and fun!", rating: 4, username: 'neema', date: '2024-07-02' },
-            { text: "Loved it! Will attend again.", rating: 5, username: 'enoch', date: '2024-07-03' },
-            { text: "Great experience, highly recommended.", rating: 4, username: 'noah', date: '2024-07-04' },
-            { text: "Top-notch event management.", rating: 5, username: 'linet', date: '2024-07-05' },
+            { text: "Amazing event! Had a great time.", rating: 5, username: 'anonymous', date: '2024-07-01' },
+            { text: "Well organized and fun!", rating: 4, username: 'anonymous', date: '2024-07-02' },
+            { text: "Loved it! Will attend again.", rating: 5, username: 'anonymous', date: '2024-07-03' },
+            { text: "Great experience, highly recommended.", rating: 4, username: 'anonymous', date: '2024-07-04' },
+            { text: "Top-notch event management.", rating: 5, username: 'anonymus', date: '2024-07-05' },
             { text: "A memorable event with excellent arrangements.", rating: 4, username: 'dudley', date: '2024-07-06' },
-            { text: "Fantastic! Everything was perfect.", rating: 5, username: 'steve', date: '2024-07-07' },
-            { text: "Had a wonderful time, thanks!", rating: 4, username: 'telvin', date: '2024-07-08' },
-            { text: "Superb event, well done!", rating: 5, username: 'victor', date: '2024-07-09' },
-            { text: "Enjoyed every moment of it.", rating: 4, username: 'jacky', date: '2024-07-10' }
+            { text: "Fantastic! Everything was perfect.", rating: 5, username: 'anonymous', date: '2024-07-07' },
+            { text: "Had a wonderful time, thanks!", rating: 4, username: 'anonymous', date: '2024-07-08' },
+            { text: "Superb event, well done!", rating: 5, username: 'anonymous', date: '2024-07-09' },
+            { text: "Enjoyed every moment of it.", rating: 4, username: 'anonymous', date: '2024-07-10' }
         ];
 
         setReviews(placeholderReviews);
@@ -51,7 +51,7 @@ function Reviews() {
             const newReview = {
                 text: reviewText,
                 rating: rating,
-                username: 'collo', // Replace with actual username from authentication
+                username: 'you are anonymous', // Replace with actual username from authentication
                 date: new Date().toISOString().split('T')[0]
             };
             setReviews([...reviews, newReview]);

@@ -21,7 +21,7 @@ function AdminDashboard() {
     const navigate = useNavigate();
 
     const api = axios.create({
-        baseURL: 'https://phase4-project-backend-server-2.onrender.com', // Adjust base URL to match your Flask server
+        baseURL: 'https://https://phase4-project-backend-server.onrender.com', // Adjust base URL to match your Flask server
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('admin_token')}`

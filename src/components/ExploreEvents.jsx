@@ -17,7 +17,7 @@ function ExploreEvents() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('https://phase4-project-backend-server-2.onrender.com/events');
+        const response = await axios.get('https://phase4-project-backend-server.onrender.com/events');
         setEvents(response.data);
       } catch (error) {
         console.error('Error fetching events:', error);

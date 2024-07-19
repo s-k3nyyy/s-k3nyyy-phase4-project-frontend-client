@@ -13,7 +13,7 @@ const AdminLogin = ({ onLogin }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://phase4-project-backend-server-2.onrender.com/admin/login', {
+      const response = await axios.post('https://phase4-project-backend-server.onrender.com/admin/login', {
         username: username,
         password: password,
       });
