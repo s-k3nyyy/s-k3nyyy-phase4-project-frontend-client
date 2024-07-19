@@ -1,7 +1,7 @@
 .form-container {
     width: 350px;
     height: auto;
-    background-color: #eeccccb6;
+    background-color: #ffb30ebd;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 10px;
     box-sizing: border-box;
@@ -43,10 +43,10 @@
 
 .form-btn {
     height: 50px;
-    background-color: #ff6363;
+    background-color: #eb9e0f38;
     border: none;
     border-radius: 5px;
-    color: white;
+    color: rgb(0, 0, 0);
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;

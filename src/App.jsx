@@ -14,35 +14,32 @@ function App() {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
 
-  // Function to handle admin login
+ 
   const handleAdminLogin = () => {
     setIsAdminAuthenticated(true);
   };
 
-  // Function to handle user login
   const handleUserLogin = () => {
     setIsUserAuthenticated(true);
   };
 
-  // Function to handle logout for both user and admin
   const handleLogout = () => {
     setIsAdminAuthenticated(false);
     setIsUserAuthenticated(false);
-    localStorage.removeItem('access_token'); // Remove user access token
-    localStorage.removeItem('admin_token'); // Remove admin token
+    localStorage.removeItem('access_token'); 
+    localStorage.removeItem('admin_token'); 
   };
 
   // Function to handle admin logout
   const handleAdminLogout = () => {
     setIsAdminAuthenticated(false);
-    localStorage.removeItem('admin_token'); // Remove admin token from localStorage
+    localStorage.removeItem('admin_token'); 
   };
 
-  // useEffect to check if user is logged in and refresh token if necessary
   useEffect(() => {
     const accessToken = localStorage.getItem('access_token');
     if (accessToken) {
-      refreshToken(); // Call refreshToken function if access token is present
+      refreshToken(); 
     }
   }, []);
 
@@ -55,7 +52,6 @@ function App() {
             <Route path="/login" element={<Login onLogin={handleUserLogin} />} />
             <Route path="/register" element={<RegisterForm onRegister={handleUserLogin} />} />
 
-            {/* Conditionally render Home or redirect to /login */}
             {isUserAuthenticated ? (
               <>
                 <Route path="/home" element={<Home onLogout={handleLogout} />} />
