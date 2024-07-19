@@ -38,12 +38,11 @@ function App() {
   useEffect(() => {
     const accessToken = localStorage.getItem('access_token');
     if (accessToken) {
-      // refreshToken(); // Uncomment if you have a token refresh mechanism
     }
   }, []);
 
   return (
-      <Router basename="/s-k3nyyy-phase4-project-frontend-client/">
+    <Router basename="/s-k3nyyy-phase4-project-frontend-client/">
       <div className="App">
         <header className="App-header">
           <Routes>
