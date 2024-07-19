@@ -15,7 +15,7 @@ function Bookmark() {
     useEffect(() => {
         const fetchAllEvents = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/events');
+                const response = await axios.get('https://phase4-project-backend-server-jd0h9f0m6-njvugushs-projects.vercel.app/events');
                 setAllEvents(response.data);
             } catch (error) {
                 console.error('Error fetching all events:', error);
