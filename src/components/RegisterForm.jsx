@@ -31,7 +31,7 @@ const RegisterForm = ({ onRegister }) => {
     };
 
     try {
-      const response = await axios.post('https://phase4-project-backend-server-jd0h9f0m6-njvugushs-projects.vercel.app/register', userData); // adjust the endpoint
+      const response = await axios.post('https://phase4-project-backend-server-2.onrender.com/register', userData); // adjust the endpoint
       console.log(response.data);
       onRegister(); // optional: trigger a callback function after successful registration
       navigate('/login', { replace: true }); // navigate to login page after registration

@@ -13,7 +13,7 @@ const AdminLogin = ({ onLogin }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://phase4-project-backend-server-jd0h9f0m6-njvugushs-projects.vercel.app/admin/login', {
+      const response = await axios.post('https://phase4-project-backend-server-2.onrender.com/admin/login', {
         username: username,
         password: password,
       });

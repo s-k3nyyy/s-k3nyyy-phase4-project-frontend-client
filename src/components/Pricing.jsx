@@ -19,7 +19,7 @@ function Pricing() {
         const config = {
           headers: { Authorization: `Bearer ${token}` }
         };
-        const response = await axios.get(`https://phase4-project-backend-server-jd0h9f0m6-njvugushs-projects.vercel.app/events/${eventId}`, config);
+        const response = await axios.get(`https://phase4-project-backend-server-2.onrender.com/events/${eventId}`, config);
         setEvent(response.data);
         setLoading(false);
       } catch (error) {
