@@ -14,7 +14,6 @@ function App() {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
 
- 
   const handleAdminLogin = () => {
     setIsAdminAuthenticated(true);
   };
@@ -39,12 +38,12 @@ function App() {
   useEffect(() => {
     const accessToken = localStorage.getItem('access_token');
     if (accessToken) {
-      refreshToken(); 
+      // refreshToken(); // Uncomment if you have a token refresh mechanism
     }
   }, []);
 
   return (
-    <Router>
+      <Router basename="/s-k3nyyy-phase4-project-frontend-client/">
       <div className="App">
         <header className="App-header">
           <Routes>
