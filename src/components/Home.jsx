@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import './Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faAdjust, faHome, faBookmark, faCompass, faStar } from '@fortawesome/free-solid-svg-icons';
 import Footer from './Footer';
+import './Home.css';
 
 function Home({ onLogout }) {
     const [darkMode, setDarkMode] = useState(() => {
-        // Check if dark mode preference is saved in localStorage
         const savedMode = localStorage.getItem('darkMode');
         return savedMode ? JSON.parse(savedMode) : false;
     });
 
     useEffect(() => {
-        // Update body class based on darkMode state
         if (darkMode) {
             document.body.classList.add('dark-mode');
         } else {
             document.body.classList.remove('dark-mode');
         }
-        // Save darkMode state to localStorage
         localStorage.setItem('darkMode', JSON.stringify(darkMode));
     }, [darkMode]);
 
@@ -33,11 +30,9 @@ function Home({ onLogout }) {
         setDarkMode(prevMode => !prevMode);
     };
 
-    const modeButtonText = darkMode ? '☀️' : '🌙';
-
     return (
         <div className={`home-page ${darkMode ? 'dark-mode' : ''}`}>
-            <header className={`head ${darkMode ? 'dark-mode' : ''}`}>
+            <header className="head">
                 <nav className="navbar">
                     <h1 className="logo">
                         <span className="site-name">Event</span>
@@ -66,7 +61,7 @@ function Home({ onLogout }) {
                         </a></li>
                         <li><button onClick={toggleDarkMode}>
                             <FontAwesomeIcon icon={faAdjust} />
-                            <span className="icon-label">{modeButtonText}</span>
+                            <span className="icon-label">{darkMode ? '☀️' : '🌙'}</span>
                         </button></li>
                     </ul>
                 </nav>

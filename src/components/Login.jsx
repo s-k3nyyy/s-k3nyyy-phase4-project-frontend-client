@@ -45,18 +45,20 @@ const Login = ({ onLogin }) => {
       <p className="title">Welcome back</p>
       {message && <p className="message">{message}</p>}
       <form className="form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          className="input"
-          placeholder="Username or Email"
-          value={usernameOrEmail}
-          onChange={(e) => setUsernameOrEmail(e.target.value)}
-          required
-        />
-        <div className="password-container">
+        <div className="form-field">
+          <input
+            type="text"
+            className="input-field"
+            placeholder="Username or Email"
+            value={usernameOrEmail}
+            onChange={(e) => setUsernameOrEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-field password-container">
           <input
             type={showPassword ? 'text' : 'password'}
-            className="input"
+            className="input-field"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -65,10 +67,12 @@ const Login = ({ onLogin }) => {
           <FontAwesomeIcon
             icon={showPassword ? faEyeSlash : faEye}
             onClick={togglePasswordVisibility}
-            className="password-icon"
+            className="input-icon"
           />
         </div>
-        <button type="submit" className="form-btn">Log in</button>
+        <div className="form-actions">
+          <button type="submit" className="submit-button">Log in</button>
+        </div>
       </form>
       <p className="sign-up-label">
         Don't have an account?{' '}

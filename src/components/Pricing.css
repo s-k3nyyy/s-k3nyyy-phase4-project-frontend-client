@@ -1,5 +1,6 @@
 /* Pricing.css */
 
+/* Base styles */
 .pricing-container {
     max-width: 600px;
     margin: 0 auto;
@@ -8,6 +9,7 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f9f9f985;
+    box-sizing: border-box;
 }
 
 .pricing-title {
@@ -25,12 +27,15 @@
     justify-content: center;
     align-items: center;
     margin: 20px 0;
+    flex-wrap: wrap;
 }
 
 .ticket-selection button {
     padding: 10px;
     font-size: 18px;
-    margin: 0 10px;
+    margin: 10px;
+    flex: 1 1 100px;
+    /* Allow buttons to wrap and resize */
 }
 
 .total-price p {
@@ -50,4 +55,62 @@
 
 .purchase-button:hover {
     background-color: #218838;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .pricing-container {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    .pricing-title {
+        font-size: 22px;
+    }
+
+    .ticket-info p {
+        font-size: 16px;
+    }
+
+    .total-price p {
+        font-size: 18px;
+    }
+
+    .purchase-button {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pricing-container {
+        padding: 10px;
+        margin: 5px;
+    }
+
+    .pricing-title {
+        font-size: 20px;
+    }
+
+    .ticket-info p {
+        font-size: 14px;
+    }
+
+    .total-price p {
+        font-size: 16px;
+    }
+
+    .purchase-button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .ticket-selection {
+        flex-direction: column;
+    }
+
+    .ticket-selection button {
+        margin: 5px 0;
+        flex: 1 1 auto;
+    }
 }

@@ -1,3 +1,4 @@
+/* Base styles */
 body.dark-mode {
     background-color: #121212;
     color: #ffffff;
@@ -10,6 +11,8 @@ body.dark-mode {
     margin: 20px 0;
     background-color: #f5f5f5;
     transition: background-color 0.3s, color 0.3s;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .reviews-container.dark-mode {
@@ -36,6 +39,8 @@ body.dark-mode {
     border-radius: 5px;
     background-color: #f9f9f952;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .review-header {
@@ -43,6 +48,7 @@ body.dark-mode {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
 .reviewer-name {
@@ -102,6 +108,7 @@ form textarea {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1em;
+    box-sizing: border-box;
 }
 
 form button {
@@ -113,8 +120,36 @@ form button {
     font-size: 1em;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 form button:hover {
     background-color: #e5533d;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    .review-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .review-body {
+        margin-bottom: 10px;
+        font-size: 0.9em;
+    }
+
+    .review-date {
+        font-size: 0.8em;
+    }
+
+    .star-rating {
+        font-size: 24px;
+    }
+
+    form button {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
 }

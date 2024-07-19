@@ -2,204 +2,17 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    position: relative;
     background-color: #f5f5f5;
-    color: #c0bdbd;
+    color: #333;
     transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Dark mode background overlay */
-.body-overlay {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    background-color: rgba(0, 0, 0, 0.5);
-    transition: opacity 0.3s ease;
 }
 
 /* Header styles */
 .head {
-    position: relative;
-    width: 100%;
-    z-index: 1000;
-    padding: 10px 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-    color: white;
-}
-
-.head nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-}
-
-.head .logo {
-    font-size: 24px;
-    color: #acaaaa;
-    display: flex;
-}
-
-.head .logo .site-name {
-    font-weight: bold;
-    font-size: 28px;
-}
-
-.head .logo .site-tagline {
-    font-size: 22px;
-    color: #ccac00;
-    margin-left: 5px;
-}
-
-/* Navigation links */
-.nav-links {
-    display: flex;
-    justify-content: space-around;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-links li {
-    font-size: 18px;
-    margin-left: 20px;
-}
-
-.nav-links li a {
-    text-decoration: none;
-    color: #999090;
-    font-weight: bold;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.nav-links li a:hover {
-    background-color: #ddd;
-    color: #ccac00;
-}
-
-/* Event ticketing message */
-.event-ticketing {
-    font-size: 20px;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-weight: bold;
-    letter-spacing: 2px;
-    width: 600px;
-    margin: 0 auto;
-    margin-top: 50px;
-    text-align: center;
-    color: #d8d6d6;
-}
-
-/* Dark mode styles */
-body.dark-mode {
-    background-color: #222;
-    color: #b8b0b0;
-}
-
-.head.dark-mode {
-    background-color: #333;
-}
-
-.nav-links.dark-mode li a {
-    color: #ccc;
-}
-
-.nav-links.dark-mode li a:hover {
-    background-color: #444;
-    color: #ccac00;
-}
-
-.event-ticketing.dark-mode {
-    color: #ccc;
-}
-
-/* Additional styles for specific components */
-.content {
-    padding: 20px;
-}
-
-/* Example event card */
-.event-card {
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    overflow: hidden;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    height: 420px;
-}
-
-.event-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.event-title,
-.event-description,
-.event-price,
-.event-date {
-    color: inherit;
-}
-
-.event-title {
-    font-size: 1.2em;
-    margin-bottom: 8px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.event-description {
-    font-size: 0.9em;
-    margin-bottom: 8px;
-    font-family: 'Open Sans', sans-serif;
-}
-
-.event-price {
-    font-size: 1em;
-    margin-bottom: 5px;
-    font-family: 'Open Sans', sans-serif;
-}
-
-.event-date {
-    font-size: 0.9em;
-    font-family: 'Open Sans', sans-serif;
-}
-
-.event-card.dark-mode {
-    background-color: #333;
-    color: #ccc;
-}
-
-.event-card.dark-mode:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-}
-
-.home-page {
-    font-family: Arial, sans-serif;
-    color: #333;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.home-page.dark-mode {
-    background-color: #121212;
-    color: #ffffff;
-}
-
-.head {
     background-color: #f5f5f5;
     padding: 20px;
     text-align: center;
+    transition: background-color 0.3s ease;
 }
 
 .head.dark-mode {
@@ -228,12 +41,13 @@ body.dark-mode {
 
 .nav-links {
     list-style: none;
-    padding: 0;
     display: flex;
+    gap: 15px;
 }
 
 .nav-links li {
-    margin: 0 10px;
+    display: flex;
+    align-items: center;
 }
 
 .nav-links a,
@@ -244,6 +58,9 @@ body.dark-mode {
     display: flex;
     align-items: center;
     gap: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: color 0.3s, background-color 0.3s;
 }
 
 .nav-links a:hover,
@@ -284,34 +101,18 @@ body.dark-mode {
     margin-bottom: 20px;
 }
 
-.intro .cta-button {
-    padding: 10px 20px;
-    background-color: #ff6347;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.intro .cta-button:hover {
-    background-color: #e5533d;
-}
-
 .features .feature-list {
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
+    gap: 20px;
 }
 
 .features .feature-item {
-    background-color: #f5f5f5;
+    background-color: #fff;
     padding: 20px;
-    margin: 10px;
     border-radius: 8px;
-    flex: 1 1 calc(33% - 40px);
-    box-sizing: border-box;
+    flex: 1 1 calc(33% - 20px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
 }
 
@@ -328,55 +129,73 @@ body.dark-mode {
     color: #666;
 }
 
-@media (max-width: 1024px) {
-    .nav-links li {
-        font-size: 16px;
-        margin-left: 15px;
-    }
-
-    .event-ticketing {
-        font-size: 18px;
-        width: 80%;
-    }
+.about {
+    font-size: 1.2em;
 }
 
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.head.dark-mode {
+    background-color: #333;
+}
+
+.nav-links a.dark-mode,
+.nav-links button.dark-mode {
+    color: #ccc;
+}
+
+.nav-links a:hover.dark-mode,
+.nav-links button:hover.dark-mode {
+    background-color: #444;
+    color: #ff6347;
+}
+
+.event-ticketing.dark-mode {
+    color: #ccc;
+}
+
+.features .feature-item.dark-mode {
+    background-color: #333;
+    color: #ccc;
+}
+
+.features .feature-item:hover.dark-mode {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
-    .head {
-        padding: 15px;
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
     }
 
-    .logo {
-        font-size: 1.8em;
-    }
-
-    .site-name {
-        font-size: 1.8em;
-    }
-
-    .site-tagline {
-        font-size: 0.4em;
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
     }
 
     .nav-links li {
-        margin: 0 8px;
-        font-size: 14px;
+        width: 100%;
     }
 
-    .event-ticketing {
-        font-size: 16px;
+    .nav-links a,
+    .nav-links button {
+        width: 100%;
+        text-align: center;
     }
 
-    .features .feature-item {
-        flex: 1 1 45%;
-        margin: 5px;
+    .features .feature-list {
+        flex-direction: column;
     }
 }
 
 @media (max-width: 480px) {
-    .head {
-        padding: 10px;
-    }
-
     .logo {
         font-size: 1.5em;
     }
@@ -390,49 +209,14 @@ body.dark-mode {
     }
 
     .nav-links li {
-        margin: 0 5px;
-        font-size: 12px;
+        font-size: 1em;
     }
 
     .event-ticketing {
-        font-size: 14px;
+        font-size: 1em;
     }
 
     .features .feature-item {
         flex: 1 1 100%;
-        margin: 5px;
-    }
-}
-
-/* Existing CSS styles */
-
-/* Mobile-first approach for responsive design */
-@media (max-width: 768px) {
-    .nav-links {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        padding: 10px;
-        background-color: #ff6600bd;
-        border-radius: 5px;
-        margin-top: 10px;
-        color: white;
-    }
-
-    .nav-links li {
-        width: 100%;
-        text-align: center;
-    }
-
-    .nav-links a,
-    .nav-links button {
-        width: 100%;
-        text-align: center;
-        padding: 10px;
-    }
-
-    .nav-links .icon-label {
-        display: none;
     }
 }
