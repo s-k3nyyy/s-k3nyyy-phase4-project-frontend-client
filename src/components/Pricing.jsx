@@ -19,7 +19,7 @@ function Pricing() {
         const config = {
           headers: { Authorization: `Bearer ${token}` }
         };
-        const response = await axios.get(`https://phase4-project-backend-server-2.onrender.com/events/${eventId}`, config);
+        const response = await axios.get(`https://phase4-project-backend-server.onrender.com/events/${eventId}`, config);
         setEvent(response.data);
         setLoading(false);
       } catch (error) {
