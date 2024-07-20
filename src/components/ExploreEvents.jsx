@@ -86,7 +86,7 @@ function ExploreEvents() {
     }
   };
 
-  const handlePayment = async () => {
+ const handlePayment = async () => {
   if (phoneNumber && paymentAmount) {
     try {
       const response = await axios.post('https://phase4-project-backend-server.onrender.com/pay', {
