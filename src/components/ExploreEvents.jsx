@@ -13,6 +13,7 @@ function ExploreEvents() {
   const [ticketCounts, setTicketCounts] = useState({});
   const [phoneNumber, setPhoneNumber] = useState('');
   const [summary, setSummary] = useState(null);
+  const [paymentAmount, setPaymentAmount] = useState('');
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -85,15 +86,34 @@ function ExploreEvents() {
     }
   };
 
-  const handlePayment = () => {
-    console.log('Processing payment for:', summary, 'Phone number:', phoneNumber);
-    setSummary(null);
-    setPhoneNumber('');
+  const handlePayment = async () => {
+    if (phoneNumber && paymentAmount) {
+      try {
+        const response = await axios.post('https://phase4-project-backend-server.onrender.com/mpesa_payment', {
+          phone_number: phoneNumber,
+          amount: paymentAmount,
+        });
+        if (response.data.ResponseCode === '0') {
+          alert('Payment successful!');
+        } else {
+          alert('Payment failed. Please try again.');
+        }
+      } catch (error) {
+        console.error('Payment error:', error);
+        alert('Payment error. Please try again.');
+      }
+      setSummary(null);
+      setPhoneNumber('');
+      setPaymentAmount('');
+    } else {
+      alert('Please enter both phone number and payment amount.');
+    }
   };
 
   const handleCancel = () => {
     setSummary(null);
     setPhoneNumber('');
+    setPaymentAmount('');
   };
 
   const filteredEvents = events.filter(
@@ -157,7 +177,7 @@ function ExploreEvents() {
                 <p className="event-date">Event Date: {new Date(event.event_date).toLocaleString()}</p>
                 <button
                   className={`like-button ${likedEvents.includes(event.id) ? 'liked' : ''}`}
-                  onClick={() => toggleLike(event.id)}
+                  onClick={(e) => { e.stopPropagation(); toggleLike(event.id); }}
                 >
                   {likedEvents.includes(event.id) ? 'Unlike' : 'Like'}
                 </button>
@@ -168,51 +188,52 @@ function ExploreEvents() {
                     </div>
                     <input
                       type="number"
-                      min="1"
-                      max="5"
-                      value={ticketCounts[event.id] || 0}
+                      placeholder="Tickets (Max 5)"
+                      value={ticketCounts[event.id] || ''}
                       onChange={(e) => handleTicketCountChange(event.id, parseInt(e.target.value, 10))}
-                      className="ticket-count-input"
+                      className="ticket-input"
                     />
-                    <button onClick={() => handleBuyTicket(event)} className="buy-ticket-button">
+                    <button className="buy-ticket-button" onClick={(e) => { e.stopPropagation(); handleBuyTicket(event); }}>
                       Buy Ticket
                     </button>
+                    <Bookmark event={event} />
                   </>
                 )}
               </div>
             ))
           ) : (
-            <p className="no-events-message">No events found matching your criteria.</p>
+            <p className="no-events-message">No events found. Please adjust your search criteria.</p>
           )}
         </div>
       </div>
-
       {summary && (
-        <div className="summary-card-overlay">
-          <div className="summary-card">
-            <h2>Order Summary</h2>
-            <p>Event: {summary.title}</p>
-            <p>Number of Tickets: {summary.ticketCount}</p>
-            <p>Total Amount: ksh {summary.totalAmount}</p>
-            <input
-              type="tel"
-              placeholder="Enter your phone number"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className="phone-input"
-            />
-            <button onClick={handlePayment} className="payment-button">
-              Proceed to Payment
-            </button>
-            <button onClick={handleCancel} className="cancel-button">
-              Cancel
-            </button>
-          </div>
+        <div className="order-summary-card">
+          <h2>Order Summary</h2>
+          <p>Event: {summary.title}</p>
+          <p>Tickets: {summary.ticketCount}</p>
+          <p>Total Amount: ksh {summary.totalAmount}</p>
+          <input
+            type="text"
+            placeholder="Phone Number"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            className="phone-input"
+          />
+          <input
+            type="text"
+            placeholder="Payment Amount"
+            value={paymentAmount}
+            onChange={(e) => setPaymentAmount(e.target.value)}
+            className="amount-input"
+          />
+          <button onClick={handlePayment} className="confirm-payment-button">
+            Confirm Payment
+          </button>
+          <button onClick={handleCancel} className="cancel-button">
+            Cancel
+          </button>
         </div>
       )}
-
-      {/* Render Bookmark component and pass likedEvents */}
-      <Bookmark likedEvents={likedEvents} />
     </div>
   );
 }
