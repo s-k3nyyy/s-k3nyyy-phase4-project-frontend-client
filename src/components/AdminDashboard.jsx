@@ -7,6 +7,7 @@ function AdminDashboard() {
     const [events, setEvents] = useState([]);
     const [users, setUsers] = useState([]);
     const [title, setTitle] = useState('');
+    const [payments, setPayments] = useState([]);
     const [description, setDescription] = useState('');
     const [ticketPrice, setTicketPrice] = useState('');
     const [photoUrl, setPhotoUrl] = useState('');
@@ -35,6 +36,7 @@ function AdminDashboard() {
         } else {
             fetchEvents();
             fetchUsers();
+            fetchPayments();
         }
     }, [navigate]);
 
@@ -112,7 +114,19 @@ function AdminDashboard() {
             setMessage('Error fetching event details. Please try again.');
         }
     };
-
+const fetchPayments = async () => {
+        try {
+            setIsLoading(true);
+            const response = await api.get('/payments');
+            setPayments(response.data);
+            setMessage('');
+        } catch (error) {
+            console.error('Error fetching payments:', error);
+            setMessage('Error fetching payments. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
     const handleEditEvent = (event) => {
         setTitle(event.title);
         setDescription(event.description);
@@ -273,10 +287,27 @@ function AdminDashboard() {
                         ) : (
                             <p>No users found.</p>
                         )}
-                    </div>
+                          <h3>Payments</h3>
+            {isLoading ? (
+                <p>Loading payments...</p>
+            ) : (
+                <ul>
+                    {payments.map(payment => (
+                        <li key={payment.id}>
+                            <p>User ID: {payment.user_id}</p>
+                            <p>Amount: {payment.amount}</p>
+                            <p>Phone Number: {payment.phone_number}</p>
+                            <p>Transaction ID: {payment.transaction_id}</p>
+                            <p>Status: {payment.status}</p>
+                            <p>Timestamp: {payment.timestamp}</p>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
                 </div>
             </div>
-        </div>
+        </div>          
     );
 }
 
