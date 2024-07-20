@@ -14,7 +14,6 @@ function ExploreEvents() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [summary, setSummary] = useState(null);
   const [paymentAmount, setPaymentAmount] = useState('');
-  const [userId, setUserId] = useState(1);
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -91,8 +90,8 @@ function ExploreEvents() {
       try {
         const response = await axios.post('https://phase4-project-backend-server.onrender.com/pay', {
           phone_number: phoneNumber.trim(),
-          amount: paymentAmount,
-          user_id: userId
+          amount: paymentAmount
+         
         }, {
           headers: {
             'Content-Type': 'application/json',
