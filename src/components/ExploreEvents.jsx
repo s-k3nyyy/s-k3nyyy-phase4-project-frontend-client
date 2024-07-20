@@ -89,10 +89,10 @@ function ExploreEvents() {
   const handlePayment = async () => {
     if (phoneNumber && paymentAmount) {
       try {
-        const response = await axios.post('https://phase4-project-backend-server.onrender.com/mpesa_payment', {
-          phone_number: phoneNumber,
-          amount: paymentAmount,
-        });
+     const response = await axios.post('https://phase4-project-backend-server.onrender.com/pay', {
+  phone_number: phoneNumber,
+  amount: paymentAmount,
+});
         if (response.data.ResponseCode === '0') {
           alert('Payment successful!');
         } else {
