@@ -14,7 +14,7 @@ function ExploreEvents() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [summary, setSummary] = useState(null);
   const [paymentAmount, setPaymentAmount] = useState('');
-
+  const [userId, setUserId] = useState(1);
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -86,35 +86,34 @@ function ExploreEvents() {
     }
   };
 
-const handlePayment = async () => {
-  if (phoneNumber && paymentAmount) {
-    try {
-      const response = await axios.post('https://phase4-project-backend-server.onrender.com/pay', {
-        phone_number: phoneNumber,
-        amount: paymentAmount,
-        user_id: userId
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
+ const handlePayment = async () => {
+    if (phoneNumber && paymentAmount) {
+      try {
+        const response = await axios.post('https://phase4-project-backend-server.onrender.com/pay', {
+          phone_number: phoneNumber.trim(),
+          amount: paymentAmount,
+          user_id: userId
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+        if (response.data.ResponseCode === '0') {
+          alert('Payment successful!');
+        } else {
+          alert('Payment failed. Please try again.');
         }
-      });
-      if (response.data.ResponseCode === '0') {
-        alert('Payment successful!');
-      } else {
-        alert('Payment failed. Please try again.');
+      } catch (error) {
+        console.error('Payment error:', error);
+        alert('Payment error. Please try again.');
       }
-    } catch (error) {
-      console.error('Payment error:', error);
-      alert('Payment error. Please try again.');
+      setSummary(null);
+      setPhoneNumber('');
+      setPaymentAmount('');
+    } else {
+      alert('Please enter both phone number and payment amount.');
     }
-    setSummary(null);
-    setPhoneNumber('');
-    setPaymentAmount('');
-  } else {
-    alert('Please enter both phone number and payment amount.');
-  }
-};
-
+  };
 
   const handleCancel = () => {
     setSummary(null);
