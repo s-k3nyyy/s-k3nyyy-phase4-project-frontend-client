@@ -87,34 +87,34 @@ function ExploreEvents() {
 
  const handlePayment = async () => {
     if (phoneNumber && paymentAmount) {
-      try {
-        const response = await axios.post('https://phase4-project-backend-server.onrender.com/pay', {
-          phone_number: phoneNumber.trim(),
-          amount: paymentAmount
-         
-        }, {
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
-        if (response.data.ResponseCode === '0') {
-          alert('Payment successful!');
-        } else {
-          alert('Payment failed. Please try again.');
-        }
-      } catch (error) {
-        console.error('Payment error:', error);
-        alert('Payment error. Please try again.');
-      }
-      setSummary(null);
-      setPhoneNumber('');
-      setPaymentAmount('');
-    } else {
-      alert('Please enter both phone number and payment amount.');
-    }
-  };
+        try {
+            const response = await axios.post('https://phase4-project-backend-server.onrender.com/pay', {
+                phone_number: phoneNumber.trim(),
+                amount: paymentAmount,
+                user_id: userId // Assuming you have the user_id stored somewhere
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
 
-  const handleCancel = () => {
+            if (response.data.ResponseCode === '0') {
+                alert('Payment successful!');
+            } else {
+                alert('Payment failed. Please try again.');
+            }
+        } catch (error) {
+            console.error('Payment error:', error);
+            alert('Payment error. Please try again.');
+        }
+        setSummary(null);
+        setPhoneNumber('');
+        setPaymentAmount('');
+    } else {
+        alert('Please enter both phone number and payment amount.');
+    }
+};
+const handleCancel = () => {
     setSummary(null);
     setPhoneNumber('');
     setPaymentAmount('');
